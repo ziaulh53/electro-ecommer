@@ -1,0 +1,28 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.17",
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0.0",
+        "postcss": "^8.4.33",
+        "tailwindcss": "^3.4.1",
+        "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "@stripe/stripe-js": "^2.4.0",
+        "@vitejs/plugin-vue": "^5.0.3",
+        "@vueuse/core": "^10.7.2",
+        "@websitebeaver/vue-magnifier": "^1.1.0",
+        "ant-design-vue": "^4.1.2",
+        "pinia": "^2.1.7",
+        "swiper": "^11.0.5",
+        "vue": "^3.4.15",
+        "vue-loader": "^17.4.2",
+        "vue-router": "^4.2.5"
+    }
+}
