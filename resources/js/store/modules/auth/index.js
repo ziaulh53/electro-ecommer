@@ -4,104 +4,108 @@ import { useLocalStorage } from "@vueuse/core";
 import { notify } from "../../../helpers";
 
 export const useAuthStore = defineStore("auth", {
-  state: () => ({
-    auth: useLocalStorage("auth", {
-      isAuthenticated: false,
-      user: {},
-      token: "",
-    }),
-  }),
-  getters: {
-    user: (state) => state.auth,
-  },
-  actions: {
-    async userRegistration(data) {
-      try {
-        const res = await api.post(auth.reg, data);
-        notify(res)
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async userLogin(data) {
-      try {
-        const res = await api.post(auth.login, data);
-        if (res.success) {
-          this.auth = {
-            isAuthenticated: true,
-            user: res?.user,
-            token: res?.token,
-          };
-        }
-        notify(res)
-        // window.location.reload()
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async userLogout() {
-      try {
-          this.auth = {
+    state: () => ({
+        auth: useLocalStorage("auth", {
             isAuthenticated: false,
             user: {},
             token: "",
-          };
-          window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
+        }),
+    }),
+    getters: {
+        user: (state) => state.auth,
     },
-    async forgetPassword(data) {
-      try {
-        const res = await api.post(auth.forgetPassword, data);
-        notify(res)
-      } catch (error) {
-        console.log(error);
-      }
+    actions: {
+        async userRegistration(data) {
+            try {
+                const res = await api.post(auth.reg, data);
+                notify(res);
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async userLogin(data) {
+            try {
+                const res = await api.post(auth.login, data);
+                if (res.success) {
+                    this.auth = {
+                        isAuthenticated: true,
+                        user: res?.user,
+                        token: res?.token,
+                    };
+                }
+                notify(res);
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async userLogout() {
+            try {
+                const res = await api.post(auth.logout);
+                if (res.success) {
+                    this.auth = {
+                        isAuthenticated: false,
+                        user: {},
+                        token: "",
+                    };
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async forgetPassword(data) {
+            try {
+                const res = await api.post(auth.forgetPassword, data);
+                notify(res);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async resetPassword(data) {
+            try {
+                const res = await api.post(auth.resetPassword, data);
+                notify(res);
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async updateProfile(data) {
+            try {
+                const res = await api.post(auth.editProfile, {
+                    profileData: { ...data },
+                });
+                notify(res);
+                if (res.success) {
+                    this.auth = {
+                        ...this.auth,
+                        user: { ...this.auth.user, ...data },
+                    };
+                }
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async changeEmail(data) {
+            try {
+                const res = await api.post(auth.changeEmailRequest, data);
+                notify(res);
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async changePassword(data) {
+            try {
+                const res = await api.post(auth.changePassword, { ...data });
+                notify(res);
+                return res;
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
-    async resetPassword(data) {
-      try {
-        const res = await api.post(auth.resetPassword, data);
-        notify(res)
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async updateProfile(data) {
-      try {
-        const res = await api.post(auth.editProfile, {profileData: {...data}});
-        notify(res);
-        if(res.success){
-          this.auth = {
-            ...this.auth,
-            user: {...this.auth.user, ...data}
-          }
-        }
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async changeEmail(data) {
-      try {
-        const res = await api.post(auth.changeEmailRequest, data);
-        notify(res)
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async changePassword(data) {
-      try {
-        const res = await api.post(auth.changePassword, {...data});
-        notify(res)
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
 });

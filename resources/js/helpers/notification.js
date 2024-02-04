@@ -6,7 +6,8 @@ notification.config({
   duration: 2,
 });
 export const notify = (data, callBackFunction) => {
-  if (data.success) {
+  console.log(data)
+  if (data?.success) {
     notification.success({
       message: data?.msg,
     });

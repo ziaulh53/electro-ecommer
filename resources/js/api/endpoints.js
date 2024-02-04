@@ -1,6 +1,7 @@
 export const auth = {
-    login: '/auth/login',
-    reg: '/auth/register',
+    login: '/signin',
+    reg: '/signup',
+    logout: '/signout',
     forgetPassword: '/auth/forget-password',
     resetPassword: '/auth/reset-password',
     editProfile: '/auth/edit-profile',

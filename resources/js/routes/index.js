@@ -16,7 +16,7 @@ import {
   NewEmailVerify,
   OrderDetails,
   Brand
-} from "../pages";
+} from "../client/pages";
 import { useAuthStore } from "../store";
 
 const routes = [
