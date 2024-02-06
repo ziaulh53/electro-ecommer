@@ -25,8 +25,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useAuthStore } from '../../../store';
-import { api } from '../../../api';
+import { useAuthStore } from '../../../../store';
+import { api } from '../../../../api';
 import { EShopInput, EShopButton } from '../../shared';
 
 const { user, updateProfile } = useAuthStore();

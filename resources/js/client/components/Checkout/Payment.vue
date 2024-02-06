@@ -29,7 +29,7 @@
    
 <script setup>
 import { ref, onMounted, toRefs } from 'vue';
-import { STRIPE_PK } from '../../api';
+import { STRIPE_PK } from '../../../api';
 import { loadStripe } from '@stripe/stripe-js';
 import { EShopButton } from '../shared';
 

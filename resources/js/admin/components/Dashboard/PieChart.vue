@@ -13,7 +13,7 @@
 import { ref, onMounted } from 'vue';
 import { Doughnut } from 'vue-chartjs';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, } from 'chart.js';
-import { api, dashboardEndpoint } from '../../api';
+import { api, dashboardEndpointAdmin } from '../../../api';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const data = ref({})
@@ -55,7 +55,7 @@ const chartOptions = {
 const fetchSellingCategoryStatistics = async () => {
   categorySellingLoading.value = true
   try {
-    data.value = await api.get(dashboardEndpoint.getCategorySelling)
+    data.value = await api.get(dashboardEndpointAdmin.getCategorySelling)
   } catch (error) {
     console.log(error)
   }

@@ -5,23 +5,14 @@
             <h5 class="text-center mb-5 text-3xl">Registration</h5>
             <div class="grid grid-cols-2 gap-5 mb-5">
                 <div>
-                    <div class="mb-2 font-bold"><label>First Name</label></div>
-                    <input class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder="e. g. john"
-                        name="firstName" v-model="credentialData.firstName" />
-                </div>
-                <div>
-                    <div class="mb-2 font-bold"><label>Last Name</label></div>
-                    <input class="w-full border-2 border-gray-300 rounded-lg p-2 px-4 " placeholder="e. g. bell"
-                        v-model="credentialData.lastName" />
+                    <div class="mb-2 font-bold"><label>Name</label></div>
+                    <input class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder="e. g. john" name="name"
+                        v-model="credentialData.name" />
                 </div>
                 <div>
                     <div class="mb-2 font-bold"><label>Email</label></div>
                     <input class="w-full border-2 border-gray-300 rounded-lg p-2 px-4 " placeholder="e. g. john@example.com"
                         v-model="credentialData.email" />
-                </div>
-                <div>
-                    <div class="mb-2 font-bold"><label>Phone</label></div>
-                    <input class="w-full border-2 border-gray-300 rounded-lg p-2 px-4 " v-model="credentialData.phone" />
                 </div>
                 <div>
                     <div class="mb-2 font-bold"><label>Password</label></div>
@@ -38,7 +29,7 @@
                     :loading="loading" />
             </div>
             <div class="text-center">
-                <p>Already have an Account? <router-link to="/" class="text-blue-500 hover:underline ml-3">Click
+                <p>Already have an Account? <router-link to="/admin" class="text-blue-500 hover:underline ml-3">Click
                         here</router-link></p>
             </div>
         </div>
@@ -48,28 +39,26 @@
 <script setup>
 
 import { computed, ref } from 'vue';
-import { EShopButton } from './components/Shared';
-import { useAuthStore } from '../store'
+import { EShopButton } from '../components/shared';
 import { useRouter } from 'vue-router';
-import { Layout } from './components/Layout';
+import { Layout } from '../components/Layout';
+import { api } from '../../api';
 
-
-const userStore = useAuthStore();
 const router = useRouter()
-const credentialData = ref({ firstName: '', lastName: '', email: '', phone: '', password: '' })
+const credentialData = ref({ name: '', email: '', password: '' })
 const loading = ref(false)
 const disabled = computed(() => {
-    const { firstName, lastName, email, phone, password } = credentialData.value;
-    return !firstName || !lastName || !phone || !email || !password
+    const { name, email, password } = credentialData.value;
+    return !name || !email || !password
 }
 );
 
 const handleSubmit = async () => {
     loading.value = true
-    const res = await userStore.userRegistration({ ...credentialData.value });
+    const res = await api.post('admin/signup',{ ...credentialData.value, role:'super_admin' });
     loading.value = true
     if (res.success) {
-        router.push({ name: 'signin' })
+        router.push({ name: 'admin-signin' })
     }
 }
 

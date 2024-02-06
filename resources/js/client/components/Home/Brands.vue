@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { api, landingEndpoint } from '../../api';
+import { api, landingEndpoint } from '../../../api';
 import { EShopSkeleton } from '../shared';
 
 const allBrands = ref({});

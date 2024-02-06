@@ -19,8 +19,8 @@
 <script setup>
 import { toRefs } from 'vue';
 import EditBrand from './EditBrand.vue';
-import { notify } from '../../../helpers';
-import { api, brand } from '../../../api';
+import { notify } from '../../../../helpers';
+import { api, brandAdmin } from '../../../../api';
 
 const props = defineProps({
     data: Object,
@@ -30,7 +30,7 @@ const { data, refetch, } = toRefs(props);
 
 const handleDelete = async (id) => {
     try {
-        const res = await api.delete(brand.deleteBrand, id);
+        const res = await api.delete(brandAdmin.deleteBrand, id);
         if (res.success) {
             notify(res);
             refetch.value();

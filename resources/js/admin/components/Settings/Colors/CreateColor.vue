@@ -11,8 +11,8 @@
 <script setup>
 import { ref, computed, toRefs } from 'vue'
 import { EShopButton, EShopInput } from '../../shared';
-import { api, color } from '../../../api';
-import { notify } from '../../../helpers';
+import { api, colorAdmin } from '../../../../api';
+import { notify } from '../../../../helpers';
 const props = defineProps({
     refetch: Function
 })
@@ -25,7 +25,7 @@ const disabled = computed(() => !colorData.value.colorName || !colorData.value.c
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(color.createColor, { ...colorData.value, colorCode: colorData.value.colorCode.toLowerCase() })
+        const res = await api.post(colorAdmin.createColor, { ...colorData.value, colorCode: colorData.value.colorCode.toLowerCase() })
         if (res.success) {
             notify(res);
             refetch.value();

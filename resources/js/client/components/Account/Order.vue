@@ -48,9 +48,9 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import { api, orderEndpoint } from '../../api'
+import { api, orderEndpoint } from '../../../api'
 import { EShopSkeleton } from '../shared';
-import { getStatusColor } from '../../helpers';
+import { getStatusColor } from '../../../helpers';
 
 const allOrders = ref({});
 const loading = ref(false);

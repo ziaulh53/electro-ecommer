@@ -13,7 +13,7 @@
 import { ref, onMounted } from 'vue';
 import CreateBrand from './CreateBrand.vue';
 import BrandItem from './BrandItem.vue';
-import { api, brand } from '../../../api';
+import { api, brandAdmin } from '../../../../api';
 
 const allBrands = ref('');
 const loading = ref(false);
@@ -21,7 +21,7 @@ const loading = ref(false);
 
 const getAllbrands = async () => {
     loading.value = true;
-    allBrands.value = await api.get(brand.getBrands);
+    allBrands.value = await api.get(brandAdmin.getBrands);
     loading.value = false
 }
 

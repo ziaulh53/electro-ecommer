@@ -29,7 +29,7 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 import UserDropdown from './Navbar/UserDropown.vue'
-import { useAuthStore, useCartStore, useCategoryStore } from '../../store';
+import { useAuthStore, useCartStore, useCategoryStore } from '../../../store';
 
 const { isAuthenticated } = useAuthStore().auth;
 const categoryStore = useCategoryStore();

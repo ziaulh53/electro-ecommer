@@ -6,7 +6,7 @@
 <script setup>
 import { ref, onMounted, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
-import { api, productEndpoint } from '../../api';
+import { api, productEndpoint } from '../../../api';
 import { ECarousel } from '../shared';
 
 const props = defineProps({

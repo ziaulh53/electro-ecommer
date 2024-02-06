@@ -15,18 +15,18 @@ export const useAuthStore = defineStore("auth", {
         user: (state) => state.auth,
     },
     actions: {
-        async userRegistration(data) {
+        async userRegistration(endpoint,data) {
             try {
-                const res = await api.post(auth.reg, data);
+                const res = await api.post(endpoint, data);
                 notify(res);
                 return res;
             } catch (error) {
                 console.log(error);
             }
         },
-        async userLogin(data) {
+        async userLogin(endpoint, data) {
             try {
-                const res = await api.post(auth.login, data);
+                const res = await api.post(endpoint, data);
                 if (res.success) {
                     this.auth = {
                         isAuthenticated: true,
@@ -40,9 +40,9 @@ export const useAuthStore = defineStore("auth", {
                 console.log(error);
             }
         },
-        async userLogout() {
+        async userLogout(endpoint) {
             try {
-                const res = await api.post(auth.logout);
+                const res = await api.post(endpoint);
                 if (res.success) {
                     this.auth = {
                         isAuthenticated: false,

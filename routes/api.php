@@ -16,8 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:user')->group(function () {
-    Route::post('/signout', [UserAuthController::class, 'userSignout']);
+// auth routes
+Route::middleware('auth:sanctum')->group(function () {
+    // user
+    Route::middleware(['role:user'])->group(function () {
+        Route::post('/signout', [UserAuthController::class, 'userSignout']);
+    });
+
+
+    //admin
+    Route::prefix('/admin')->group(function () {
+        Route::middleware(['role:super_admin,admin'])->group(function () {
+            Route::post('/signout', [AdminAuthController::class, 'adminSignout']);
+        });
+    });
 });
 
 Route::post('/signup', [UserAuthController::class, 'userSignup']);
@@ -29,8 +41,6 @@ Route::post('/signin', [UserAuthController::class, 'userLogin']);
 
 // admin routes
 Route::prefix('/admin')->group(function () {
-
-
     Route::post('/signup', [AdminAuthController::class, 'adminSignup']);
     Route::post('/signin', [AdminAuthController::class, 'adminSignin']);
 });

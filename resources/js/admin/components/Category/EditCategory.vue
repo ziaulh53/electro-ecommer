@@ -35,9 +35,9 @@
 
 <script setup>
 import { ref, toRefs, computed } from 'vue';
-import { api, category } from '../../api';
-import { notify } from '../../helpers';
-import { useBrandStore } from '../../store';
+import { api, categoryAdmin } from '../../../api';
+import { notify } from '../../../helpers';
+import { useBrandStore } from '../../../store';
 
 const props = defineProps({
     data: Object,
@@ -67,7 +67,7 @@ const handleSubmit = async (id) => {
     try {
         const { name, brands, coverImage } = categoryData.value;
         console.log(brands)
-        const res = await api.put(category.editCategory, id, { name, coverImage, brands });
+        const res = await api.put(categoryAdmin.editCategory, id, { name, coverImage, brands });
         notify(res);
         handleClose();
         refetch.value();

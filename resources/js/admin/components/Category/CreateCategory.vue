@@ -33,9 +33,9 @@
 <script setup>
 import { ref, computed, toRefs } from 'vue'
 import { EShopButton } from '../shared';
-import { api, category } from '../../api';
-import { useBrandStore } from '../../store';
-import { notify } from '../../helpers';
+import { api, categoryAdmin } from '../../../api';
+import { useBrandStore } from '../../../store';
+import { notify } from '../../../helpers';
 const props = defineProps({
     refetch: Function
 })
@@ -51,7 +51,7 @@ const disabled = computed(() => !categoryData.value.name || categoryData.value.b
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(category.createCategory, {...categoryData.value})
+        const res = await api.post(categoryAdmin.createCategory, {...categoryData.value})
         notify(res, refetch.value)
         open.value = false;
 

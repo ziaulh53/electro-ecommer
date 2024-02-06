@@ -14,7 +14,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Layout } from '../components/Layout';
-import { api, orderEndpoint } from '../api';
+import { api, orderEndpoint } from '../../api';
 import { PageTitle } from '../components/shared';
 import { OrderFilters, OrderTable } from '../components/Orders'
 const allOrders = ref({});

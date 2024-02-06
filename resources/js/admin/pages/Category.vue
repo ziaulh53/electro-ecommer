@@ -17,9 +17,9 @@
 import { Layout } from '../components/Layout';
 import { PageTitle } from '../components/shared';
 import { CategoryItem, CreateCategory } from '../components/Category'
-import { api, category } from '../api';
+import { api, categoryAdmin } from '../../api';
 import { onMounted, ref } from 'vue';
-import { useBrandStore } from '../store'
+import { useBrandStore } from '../../store'
 
 const brandStore = useBrandStore()
 const allCategory = ref('');
@@ -28,7 +28,7 @@ const loading = ref(false);
 
 const getAllCategory = async () => {
     loading.value = true;
-    allCategory.value = await api.get(category.getCategory);
+    allCategory.value = await api.get(categoryAdmin.getCategory);
     loading.value = false
 }
 const getAllBrands = () => {

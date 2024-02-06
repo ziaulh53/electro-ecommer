@@ -20,7 +20,7 @@
 
 <script setup>
 import { ref, onMounted, toRefs } from 'vue';
-import { addressEndpoint, api } from '../../api';
+import { addressEndpoint, api } from '../../../api';
 
 const props = defineProps({
     handleShippingAddress: Function

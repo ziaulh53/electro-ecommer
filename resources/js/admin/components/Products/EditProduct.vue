@@ -91,9 +91,9 @@ import { CaretRightOutlined } from '@ant-design/icons-vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { EShopButton, EShopInput } from '../shared';
-import { api, product } from '../../api';
+import { api, productAdmin } from '../../../api';
 import EditColor from './EditColor.vue';
-import { notify } from '../../helpers';
+import { notify } from '../../../helpers';
 
 const props = defineProps({
     refetch: Function,
@@ -185,7 +185,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.put(product.editProduct, productDetails.value._id, { productData: { ...productData.value, description: content.value.getHTML() } });
+        const res = await api.put(productAdmin.editProduct, productDetails.value._id, { productData: { ...productData.value, description: content.value.getHTML() } });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {

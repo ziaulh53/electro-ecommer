@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { useCartStore } from '../../store';
+import { useCartStore } from '../../../store';
 
 defineProps({
     cart: Object

@@ -14,7 +14,7 @@ class UserAuthController extends Controller
     {
         $data = $request->validated();
         /** @var User $user */
-        $data['password'] = bcrypt($data['password']); 
+        $data['password'] = bcrypt($data['password']);
         User::create($data);
         return response(['success' => true, 'msg' => 'Registration Successfully']);
     }
@@ -39,8 +39,9 @@ class UserAuthController extends Controller
         return response(compact('user', 'token', 'success', 'msg'));
     }
 
-    public function userSignout (){
-          /** @var User $user */
+    public function userSignout()
+    {
+        /** @var User $user */
         $user  = Auth::user();
         $user->currentAccessToken()->delete;
         return response(['success' => true]);

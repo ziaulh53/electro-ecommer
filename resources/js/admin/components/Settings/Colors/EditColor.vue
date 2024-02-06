@@ -9,8 +9,8 @@
 
 <script setup>
 import { ref, toRefs, computed } from 'vue';
-import { api, color } from '../../../api';
-import { notify } from '../../../helpers';
+import { api, colorAdmin } from '../../../../api';
+import { notify } from '../../../../helpers';
 import { EShopInput } from '../../shared';
 
 const props = defineProps({
@@ -36,7 +36,7 @@ const handleSubmit = async (id) => {
     loading.value = true;
     try {
         const { colorName, colorCode } = colorData.value;
-        const res = await api.put(color.editColor, id, { colorData: { colorName, colorCode: colorCode?.toLowerCase() } });
+        const res = await api.put(colorAdmin.editColor, id, { colorData: { colorName, colorCode: colorCode?.toLowerCase() } });
         notify(res);
         handleClose();
         refetch.value();

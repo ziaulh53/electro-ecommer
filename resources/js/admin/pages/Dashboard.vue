@@ -22,7 +22,7 @@ import { ref, onMounted } from 'vue'
 import { LineChart, PieChart } from '../components/Dashboard';
 import { Layout } from '../components/Layout';
 import { PageTitle } from '../components/shared';
-import { api, dashboardEndpoint } from '../api';
+import { api, dashboardEndpointAdmin } from '../../api';
 
 const data = ref({});
 const selectType = ref('day');
@@ -32,7 +32,7 @@ const options = [{ value: 'day', label: "Last 7 days" }, { value: 'month', label
 const fetchSellingStatistics = async () => {
     sellingLoading.value = true
     try {
-        data.value = await api.get(dashboardEndpoint.getDashboardData, { type: selectType.value })
+        data.value = await api.get(dashboardEndpointAdmin.getDashboardData, { type: selectType.value })
     } catch (error) {
         console.log(error)
     }

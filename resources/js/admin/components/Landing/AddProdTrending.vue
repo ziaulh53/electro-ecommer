@@ -21,8 +21,8 @@
 
 import { ref, toRefs } from 'vue';
 import { EShopButton } from '../shared';
-import { api, landing, product } from '../../api';
-import { notify } from '../../helpers';
+import { api, landingAdmin, productAdmin } from '../../../api';
+import { notify } from '../../../helpers';
 
 const props = defineProps({
     data: Array,
@@ -37,7 +37,7 @@ const selectedProduct = ref(data?.value?.map(pr=>pr?._id));
 const handleModal = async () => {
     open.value = true;
     try {
-        allProducts.value = await api.get(product.getProdcuts)
+        allProducts.value = await api.get(productAdmin.getProdcuts)
     } catch (error) {
         console.log(error)
     }
@@ -45,7 +45,7 @@ const handleModal = async () => {
 
 const handleOk = async()=>{
     try {
-        const res = await api.post(landing.updateTrending, { trendings: selectedProduct.value });
+        const res = await api.post(landingAdmin.updateTrending, { trendings: selectedProduct.value });
         notify(res, refetch.value)
         open.value = false
     } catch (error) {

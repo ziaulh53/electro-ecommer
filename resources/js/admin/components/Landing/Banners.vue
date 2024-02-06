@@ -25,8 +25,8 @@
 <script setup>
 import { ref, toRefs, computed } from 'vue';
 import { EShopButton } from '../shared';
-import { api, landing } from '../../api';
-import { notify } from '../../helpers';
+import { api, landingAdmin } from '../../../api';
+import { notify } from '../../../helpers';
 
 const props = defineProps({
     refetch: Function,
@@ -56,7 +56,7 @@ const handleDelete = (url)=>{
 }
 const handleUpdate = async () => {
     try {
-        const res = await api.post(landing.updateBanner, { banners: bannerState.value });
+        const res = await api.post(landingAdmin.updateBanner, { banners: bannerState.value });
         notify(res, refetch.value)
     } catch (error) {
         console.log(error)

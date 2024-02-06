@@ -40,7 +40,7 @@
 <script setup>
 import { ref } from 'vue';
 import { onMounted, computed } from 'vue';
-import { useAuthStore, useCartStore, useCategoryStore } from '../../store';
+import { useAuthStore, useCartStore, useCategoryStore } from '../../../store';
 
 
 const open = ref(false);

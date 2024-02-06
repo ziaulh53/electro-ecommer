@@ -30,7 +30,7 @@
 
 import { computed, ref } from 'vue';
 import { EShopButton, EShopInput } from '../components/shared';
-import { useAuthStore } from '../store'
+import { useAuthStore } from '../../store'
 import { useRouter } from 'vue-router';
 import { Layout } from '../components/Layout';
 
@@ -47,7 +47,7 @@ const disabled = computed(() => {
 
 const handleSubmit = async () => {
     loading.value = true
-    const res = await userStore.userRegistration({ ...credentialData.value });
+    const res = await userStore.userRegistration('signup',{ ...credentialData.value,role: 'user'  });
     loading.value = true
     if (res.success) {
         router.push({ name: 'signin' })

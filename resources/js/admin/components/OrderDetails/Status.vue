@@ -30,10 +30,10 @@
 
 <script setup>
 import { ref, computed, toRefs } from 'vue';
-import { getStatusColor, notify } from '../../helpers';
+import { getStatusColor, notify } from '../../../helpers';
 import { EShopInput } from '../shared';
-import { api, orderEndpoint } from '../../api';
-import { ORDER_STATUS } from '../../constant';
+import { api, orderEndpoint } from '../../../api';
+import { ORDER_STATUS } from '../../../constant';
 
 const props = defineProps({
     data: Object,

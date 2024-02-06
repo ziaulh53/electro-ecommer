@@ -18,8 +18,8 @@
 
 <script setup>
 import { toRefs, ref, computed } from 'vue';
-import { addressEndpoint, api } from '../../../api';
-import { notify } from '../../../helpers';
+import { addressEndpoint, api } from '../../../../api';
+import { notify } from '../../../../helpers';
 import AddressForm from './AddressForm.vue';
 
 const props = defineProps({

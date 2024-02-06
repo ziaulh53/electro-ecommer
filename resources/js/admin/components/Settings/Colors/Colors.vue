@@ -21,7 +21,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { api, color } from '../../../api';
+import { api, colorAdmin } from '../../../../api';
 import CreateColor from './CreateColor.vue';
 import EditColor from './EditColor.vue';
 
@@ -67,7 +67,7 @@ onMounted(() => {
 // delete colors
 const handleDelete= async(id)=>{
     try {
-        const res = await api.delete(color.deleteColor, id);
+        const res = await api.delete(colorAdmin.deleteColor, id);
         if (res.success) {
             notify(res);
             getAllColors()

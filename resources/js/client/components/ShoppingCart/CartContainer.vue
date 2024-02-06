@@ -44,7 +44,7 @@
   
 <script setup>
 import { computed } from 'vue';
-import { useCartStore } from '../../store';
+import { useCartStore } from '../../../store';
 import SingleCart from './SingleCart.vue';
 
 

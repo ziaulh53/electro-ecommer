@@ -21,7 +21,7 @@
 
 <script setup>
 import { Layout } from '../components/Layout';
-import { useAuthStore, useCartStore } from '../store';
+import { useAuthStore, useCartStore } from '../../store';
 import { CartContainer } from '../components/ShoppingCart';
 const cartStore = useCartStore();
 const { isAuthenticated } = useAuthStore().user;

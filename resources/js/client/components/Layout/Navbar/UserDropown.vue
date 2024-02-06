@@ -19,11 +19,11 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '../../../store';
+import { useAuthStore } from '../../../../store';
 
 const { userLogout, user } = useAuthStore();
 
 const onLogout = () => {
-    userLogout();
+    userLogout('signout');
 }
 </script>

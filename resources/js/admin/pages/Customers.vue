@@ -13,7 +13,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { Layout } from '../components/Layout';
-import { api, user } from '../api';
+import { api, user } from '../../api';
 const allusers = ref('');
 const loading = ref('');
 

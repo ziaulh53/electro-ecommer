@@ -2,7 +2,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { api, wishEndpoint } from '../../api';
+import { api, wishEndpoint } from '../../../api';
 
 
 const getWishList = async () => {

@@ -17,15 +17,15 @@
             </div>
         </div>
         <div v-if="product?.newArrival" class="absolute top-[-6px] left-[-7px]">
-            <img class="w-[68px]" src="/assets/tag1.png"/>
+            <img class="w-[68px]" :src="'/assets/tag1.png'"/>
         </div>
     </div>
 </template>
 
 
 <script setup>
-import { api, product as productEndpoint } from '../../api';
-import { notify } from '../../helpers';
+import { api, productAdmin} from '../../../api';
+import { notify } from '../../../helpers';
 import { EShopButton } from '../shared';
 import { toRefs } from 'vue';
 import EditProduct from './EditProduct.vue';
@@ -41,7 +41,7 @@ const { refetch, product } = toRefs(props)
 
 const handleDelete = async () => {
     try {
-        const res = await api.delete(productEndpoint.deleteProduct, product.value._id);
+        const res = await api.delete(productAdmin.deleteProduct, product.value._id);
         notify(res, refetch.value)
     } catch (error) {
         console.log(error)

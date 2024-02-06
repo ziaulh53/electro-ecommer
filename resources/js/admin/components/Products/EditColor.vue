@@ -28,7 +28,7 @@
 <script setup>
 import { ref, toRefs, computed } from 'vue';
 import { EShopButton, EShopInput } from '../shared';
-import { api } from '../../api';
+import { api } from '../../../api';
 
 const props = defineProps({
     colorstate: Object,

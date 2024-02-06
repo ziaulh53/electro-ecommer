@@ -22,7 +22,7 @@
 <script setup>
 
 import { computed, ref } from 'vue';
-import { useAuthStore } from '../store'
+import { useAuthStore } from '../../store'
 import { useRouter } from 'vue-router'
 import { EShopButton, EShopInput } from '../components/shared';
 import { Layout } from '../components/Layout';
@@ -37,7 +37,7 @@ const disabled = computed(() => !credentialData.value.email || !credentialData.v
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await userStore.userLogin({ ...credentialData.value });
+        const res = await userStore.userLogin('/signin',{ ...credentialData.value});
         if(res.success){
             router.push({name: 'home'})
             window.location.reload()

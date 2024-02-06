@@ -30,7 +30,7 @@
 <script setup>
 
 import { computed, ref } from 'vue';
-import { useAuthStore } from '../store'
+import { useAuthStore } from '../../store'
 import { Layout } from '../components/Layout';
 import { EShopButton } from '../components/shared';
 const emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

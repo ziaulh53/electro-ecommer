@@ -19,11 +19,11 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useAuthStore } from '../../store';
+import { useAuthStore } from '../../../store';
 import { EShopButton, EShopInput } from '../shared';
-import { api, wishEndpoint } from '../../api';
+import { api, wishEndpoint } from '../../../api';
 import { useRoute } from 'vue-router';
-import { notify } from '../../helpers';
+import { notify } from '../../../helpers';
 
 const credentialData = ref({ email: '', password: '' })
 

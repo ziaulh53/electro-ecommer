@@ -37,9 +37,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { Layout } from '../components/Layout';
-import { api, productEndpoint } from '../api';
+import { api, productEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
-import { useCartStore } from '../store'
+import { useCartStore } from '../../store'
 import { ImageViewer, ProductInfo, AddWish, ExploreMore } from '../components/ProductDetails'
 
 import { EShopButton, EShopSkeleton } from '../components/shared';

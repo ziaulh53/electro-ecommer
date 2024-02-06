@@ -46,9 +46,9 @@ import { ref, computed, onMounted } from 'vue'
 import { Layout } from '../components/Layout';
 import { EShopButton } from '../components/shared';
 import { OrderItems, Shipping, Billing, Payment } from '../components/Checkout';
-import { useCartStore } from '../store'
-import { api, orderEndpoint } from '../api';
-import { notify } from '../helpers';
+import { useCartStore } from '../../store'
+import { api, orderEndpoint } from '../../api';
+import { notify } from '../../helpers';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

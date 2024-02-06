@@ -24,8 +24,8 @@
 <script setup>
 import { ref, computed, toRefs } from 'vue'
 import { EShopButton } from '../../shared';
-import { api, brand } from '../../../api';
-import { notify } from '../../../helpers';
+import { api, brandAdmin } from '../../../../api';
+import { notify } from '../../../../helpers';
 const props = defineProps({
     refetch: Function
 })
@@ -38,7 +38,7 @@ const disabled = computed(() => !brandData.value.name);
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(brand.createBrand, { ...brandData.value })
+        const res = await api.post(brandAdmin.createBrand, { ...brandData.value })
         if (res.success) {
             notify(res);
             refetch.value();

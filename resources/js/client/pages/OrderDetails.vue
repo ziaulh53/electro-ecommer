@@ -25,7 +25,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Layout } from '../components/Layout';
-import { api, orderEndpoint } from '../api';
+import { api, orderEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
 import { AddressDetails, OrderItems, Status } from '../components/OrderDetails'
 import { EShopSkeleton } from '../components/shared';

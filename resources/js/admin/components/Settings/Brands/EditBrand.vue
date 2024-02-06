@@ -23,8 +23,8 @@
 
 <script setup>
 import { ref, toRefs, computed } from 'vue';
-import { api, brand } from '../../../api';
-import { notify } from '../../../helpers';
+import { api, brandAdmin } from '../../../../api';
+import { notify } from '../../../../helpers';
 
 const props = defineProps({
     data: Object,
@@ -49,7 +49,7 @@ const handleSubmit = async (id)=>{
     loading.value= true;
     try {
         const {name, logo} = brandData.value;
-        const res = await api.put(brand.editBrand, id, {name, logo});
+        const res = await api.put(brandAdmin.editBrand, id, {name, logo});
         notify(res);
         handleClose();
         refetch.value();

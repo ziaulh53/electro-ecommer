@@ -16,8 +16,8 @@
 import { ref, onMounted, computed } from 'vue';
 import { EShopButton, EShopSkeleton } from '../shared';
 import { AddressItem, AddressForm } from './Address';
-import { addressEndpoint, api } from '../../api';
-import { notify } from '../../helpers';
+import { addressEndpoint, api } from '../../../api';
+import { notify } from '../../../helpers';
 
 const allAddress = ref([]);
 const loading = ref(false);

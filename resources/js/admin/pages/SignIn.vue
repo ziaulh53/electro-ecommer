@@ -18,9 +18,9 @@
                     :loading="loading" />
             </div>
             <div class="">
-                <p>Don't have an account? <router-link to="/signup" class="text-blue-500 hover:underline ml-3">Click
+                <p>Don't have an account? <router-link to="/admin/signup" class="text-blue-500 hover:underline ml-3">Click
                         here</router-link></p>
-                <router-link to="/forget-password" class="text-blue-500 hover:underline">Forgot password?</router-link>
+                <router-link to="/admin/forget-password" class="text-blue-500 hover:underline">Forgot password?</router-link>
             </div>
         </div>
     </div>
@@ -30,8 +30,9 @@
 
 import { computed, ref } from 'vue';
 import { EShopButton } from '../components/shared';
-import { useAuthStore } from '../store'
+import { useAuthStore } from '../../store'
 import { useRouter } from 'vue-router'
+import { api } from '../../api';
 
 
 const userStore = useAuthStore();
@@ -43,9 +44,9 @@ const disabled = computed(() => !credentialData.value.email || !credentialData.v
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await userStore.userLogin({ ...credentialData.value });
+        const res = await userStore.userLogin('admin/signin' ,{ ...credentialData.value });
         if (res.success) {
-            router.push({ name: 'dashboard' })
+            router.push({ name: 'admin-dashboard' })
             window.location.reload();
         }
 

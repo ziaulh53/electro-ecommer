@@ -13,7 +13,6 @@ class AdminAuthController extends Controller
     public function adminSignup(AdminRegisterRequest $request)
     {
         $data = $request->validated();
-        /** @var Admin $user */
         $data['password'] = bcrypt($data['password']); 
         Admin::create($data);
         return response(['success' => true, 'msg' => 'Registration Successfully']);
@@ -31,7 +30,7 @@ class AdminAuthController extends Controller
                 'success' => false
             ], 200);
         }
-        /** @var Admin $user */
+        /** @var User $user */
         $user  = Auth::guard('admin')->user();
         $token = $user->createToken('main')->plainTextToken;
         $success = true;
@@ -42,7 +41,8 @@ class AdminAuthController extends Controller
     public function adminSignout (){
           /** @var Admin $user */
         $user  = Auth::guard('admin')->user();
-        $user->currentAccessToken()->delete;
+        echo $user;
+        // $user->currentAccessToken()->delete;
         return response(['success' => true]);
     }
 }

@@ -32,7 +32,7 @@
 import { ref, onMounted } from 'vue';
 import { Poster, Categories, Brands, NewArrival } from '../components/Home';
 import { Layout } from '../components/Layout';
-import { api, landingEndpoint } from '../api';
+import { api, landingEndpoint } from '../../api';
 import { EShopSkeleton, ECarousel } from '../components/shared';
 
 const homepageData = ref({});

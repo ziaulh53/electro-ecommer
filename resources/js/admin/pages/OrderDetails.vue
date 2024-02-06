@@ -52,7 +52,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'
-import { api, orderEndpoint } from '../api';
+import { api, orderEndpoint } from '../../api';
 import { Layout } from '../components/Layout';
 import { AddressDetails, OrderItems, Status } from '../components/OrderDetails'
 import { PageTitle } from '../components/shared';

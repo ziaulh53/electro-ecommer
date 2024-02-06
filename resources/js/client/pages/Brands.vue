@@ -22,7 +22,7 @@ import { Layout } from '../components/Layout';
 
 import { onMounted, ref, watch } from 'vue';
 import { ProductList } from '../components/CategoryDetails';
-import { api, landingEndpoint, productEndpoint } from '../api';
+import { api, landingEndpoint, productEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
 const allbandProduct = ref([]);
 const allBrands = ref([]);

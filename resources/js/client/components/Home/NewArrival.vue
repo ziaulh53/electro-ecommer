@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { api, productEndpoint } from '../../api';
+import { api, productEndpoint } from '../../../api';
 import { ECarousel, EShopSkeleton } from '../shared';
 
 const newArrival = ref({});

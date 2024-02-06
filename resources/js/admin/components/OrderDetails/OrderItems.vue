@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, toRefs, onMounted, computed } from 'vue';
+import { ref, toRefs, onMounted } from 'vue';
 
 const props = defineProps({
     data: Array

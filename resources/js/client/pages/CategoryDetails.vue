@@ -26,7 +26,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { Layout } from '../components/Layout';
 import { Filters, ProductList } from '../components/CategoryDetails';
-import { api, categoryEndpoint } from '../api';
+import { api, categoryEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
 import { EShopSkeleton } from '../components/shared';
 const category = ref('');

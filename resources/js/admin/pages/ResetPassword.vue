@@ -29,9 +29,9 @@
 
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { EShopButton } from './components/Shared';
-import { useAuthStore } from '../store'
-import { Layout } from './components/Layout';
+import { EShopButton } from '../components/shared';
+import { useAuthStore } from '../../store'
+import { Layout } from '../components/Layout';
 const userStore = useAuthStore();
 const route = useRoute()
 const router = useRouter();
@@ -45,7 +45,7 @@ const handleSubmit = async () => {
     try {
         const res = await userStore.resetPassword({ newPassword: credentialData.value.password, token: route.query.security_key })
         if (res.success) {
-            router.push({ name: 'signin' })
+            router.push({ name: 'admin-signin' })
         }
     } catch (error) {
         console.log(error)

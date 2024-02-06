@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useAuthStore } from '../../../store';
+import { useAuthStore } from '../../../../store';
 import { EShopInput, EShopButton } from '../../shared';
 
 const { changePassword, userLogout } = useAuthStore();

@@ -30,7 +30,7 @@
 <script setup>
 import { ref, toRefs, computed } from 'vue';
 import { EShopButton, EShopInput } from '../shared';
-import { ORDER_STATUS } from '../../constant';
+import { ORDER_STATUS } from '../../../constant';
 import moment from 'moment';
 
 const props = defineProps({

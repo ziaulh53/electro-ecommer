@@ -22,7 +22,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useCategoryStore } from '../../store';
+import { useCategoryStore } from '../../../store';
 
 const categoryStore = useCategoryStore();
 const allCategories = computed(()=>categoryStore.category)

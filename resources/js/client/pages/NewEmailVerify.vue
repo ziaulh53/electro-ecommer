@@ -26,8 +26,8 @@
 import { onMounted, ref } from 'vue'
 import { Layout } from '../components/Layout';
 import { useRoute, useRouter } from 'vue-router'
-import { api, auth } from '../api';
-import { notify } from '../helpers';
+import { api, auth } from '../../api';
+import { notify } from '../../helpers';
 import { EShopSkeleton } from '../components/shared';
 
 const { query } = useRoute();

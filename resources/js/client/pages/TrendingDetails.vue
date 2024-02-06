@@ -31,7 +31,7 @@
 import { onMounted, ref } from 'vue';
 import { Layout } from '../components/Layout';
 import { ProductList } from '../components/CategoryDetails';
-import { api, landingEndpoint } from '../api';
+import { api, landingEndpoint } from '../../api';
 import { EShopSkeleton } from '../components/shared';
 const trending = ref({});
 const loading = ref(false);

@@ -19,7 +19,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { Layout } from '../components/Layout';
-import { api, category, color } from '../api';
+import { api, categoryAdmin, colorAdmin } from '../../api';
 import { useRoute } from 'vue-router'
 import { PageTitle } from '../components/shared';
 import { SingleProduct, CreateProduct } from '../components/Products'
@@ -30,7 +30,7 @@ const categoryDetails = ref({});
 const fetchSingleCategory = async () => {
     loading.value = true
     try {
-        categoryDetails.value = await api.get(category.getCategory + '/' + router.params.id)
+        categoryDetails.value = await api.get(categoryAdmin.getCategory + '/' + router.params.id)
     } catch (error) {
         console.log(error)
     }
@@ -38,7 +38,7 @@ const fetchSingleCategory = async () => {
 }
 const getAllColor = async () => {
     try {
-        allColors.value = await api.get(color.getColors);
+        allColors.value = await api.get(colorAdmin.getColors);
     } catch (error) {
         console.log(error)
     }

@@ -31,7 +31,7 @@
 
 <script setup>
 import { toRefs } from 'vue'
-import { getStatusColor } from '../../helpers';
+import { getStatusColor } from '../../../helpers';
 import moment from 'moment';
 
 const props = defineProps({

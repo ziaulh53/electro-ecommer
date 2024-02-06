@@ -19,8 +19,8 @@
 
 <script setup>
 import { toRefs } from 'vue';
-import { api, category } from '../../api';
-import { notify } from '../../helpers';
+import { api, categoryAdmin } from '../../../api';
+import { notify } from '../../../helpers';
 import EditCategory from './EditCategory.vue';
 
 const props = defineProps({
@@ -31,7 +31,7 @@ const { data, refetch } = toRefs(props);
 
 const handleDelete = async (id) => {
     try {
-        const res = await api.delete(category.deleteCategory, id);
+        const res = await api.delete(categoryAdmin.deleteCategory, id);
         notify(res, refetch.value);
     } catch (error) {
         console.log(error)
