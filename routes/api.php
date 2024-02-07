@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\UserAuthController;
+use App\Http\Controllers\Api\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,8 +33,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::middleware(['role:super_admin,admin'])->group(function () {
             Route::post('/signout', [AdminAuthController::class, 'adminSignout']);
+            Route::get('/user',[UsersController::class, 'getUsers']);
+            Route::apiResource('/brand', BrandController::class);
+            Route::apiResource('/color', ColorController::class);
+            Route::apiResource('/category', CategoryController::class);
         });
     });
+
+    // common
+    Route::post('/file-upload', [FileUploadController::class, 'storeUploads']);
 });
 
 Route::post('/signup', [UserAuthController::class, 'userSignup']);

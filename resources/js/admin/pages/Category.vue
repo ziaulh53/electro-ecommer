@@ -6,7 +6,7 @@
         </div>
         <a-spin :spinning="loading">
             <div class="grid grid-cols-4 gap-5">
-                <CategoryItem v-for="category of allCategory.result" :key="category._id" :data="category"
+                <CategoryItem v-for="category of allCategory.categories" :key="category.id" :data="category"
                     :refetch="getAllCategory" />
             </div>
         </a-spin>

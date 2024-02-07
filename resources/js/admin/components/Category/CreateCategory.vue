@@ -11,7 +11,7 @@
             <div>
                 <a-select v-model:value="categoryData.brands" mode="multiple" placeholder="Inserted are removed"
                     class="w-full rounded-lg" size="large" >
-                    <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{ brand.name
+                    <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{ brand.name
                     }}</a-select-option>
                 </a-select>
             </div>
@@ -41,7 +41,7 @@ const props = defineProps({
 })
 const {refetch} = toRefs(props)
 const brandStore = useBrandStore();
-const allBrands = computed(() => brandStore.brand.map(({ _id, name }) => ({ _id, name })) || [])
+const allBrands = computed(() => brandStore.brand.map(({ id, name }) => ({ id, name })) || [])
 
 const open = ref(false);
 
@@ -51,7 +51,7 @@ const disabled = computed(() => !categoryData.value.name || categoryData.value.b
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(categoryAdmin.createCategory, {...categoryData.value})
+        const res = await api.post(categoryAdmin.getCategory, {...categoryData.value})
         notify(res, refetch.value)
         open.value = false;
 
@@ -63,7 +63,7 @@ const handleSubmit = async () => {
 const handleFile = async (e) => {
     try {
         const res = await api.fileUpload(e.target.files[0]);
-        categoryData.value = { ...categoryData.value, coverImage: res.result.url }
+        categoryData.value = { ...categoryData.value, coverImage: res.url }
     } catch (error) {
         console.log(error)
     }

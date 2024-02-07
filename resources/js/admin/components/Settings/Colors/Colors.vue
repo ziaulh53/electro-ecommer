@@ -3,9 +3,9 @@
         <CreateColor :refetch="getAllColors" />
     </div>
     <a-spin :spinning="loading">
-        <a-table :dataSource="allColors.result" :columns="columns">
+        <a-table :dataSource="allColors.data" :columns="columns">
             <template #action="{ record }">
-                <a-popconfirm title="Are you sure?" ok-type="danger" @confirm="() => handleDelete(record._id)">
+                <a-popconfirm title="Are you sure?" ok-type="danger" @confirm="() => handleDelete(record.id)">
                     <span class="mr-2">
                         <i class="fa-solid fa-trash-can text-red-500"></i>
                     </span>
@@ -56,7 +56,8 @@ const columns = [
 // fetch colors
 const getAllColors = async () => {
     loading.value = true;
-    allColors.value = await api.get(color.getColors);
+    const res= await api.get(colorAdmin.getColors);
+    allColors.value  = res?.colors;
     loading.value = false
 }
 
@@ -67,7 +68,7 @@ onMounted(() => {
 // delete colors
 const handleDelete= async(id)=>{
     try {
-        const res = await api.delete(colorAdmin.deleteColor, id);
+        const res = await api.delete(colorAdmin.getColors, id);
         if (res.success) {
             notify(res);
             getAllColors()

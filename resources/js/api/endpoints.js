@@ -62,13 +62,13 @@ export const user = {
 }
 
 export const brandAdmin = {
-    getBrands: '/admin/brand',
+    getBrands: '/admin/brand/',
     createBrand: '/admin/brand/create',
     editBrand: '/admin/brand/edit/',
     deleteBrand: '/admin/brand/delete/',
 }
 export const categoryAdmin = {
-    getCategory: '/admin/category',
+    getCategory: '/admin/category/',
     createCategory: '/admin/category/create',
     editCategory: '/admin/category/edit/',
     deleteCategory: '/admin/category/delete/',
@@ -82,14 +82,14 @@ export const productAdmin = {
 }
 
 export const colorAdmin = {
-    getColors: '/admin/color',
+    getColors: '/admin/color/',
     createColor: '/admin/color/create',
     editColor: '/admin/color/edit/',
     deleteColor: '/admin/color/delete/',
 }
 
 export const landingAdmin = {
-    getHomePageData: '/admin/landing',
+    getHomePageData: '/admin/landing/',
     updateBanner: '/admin/landing/banner',
     updateTrending: '/admin/landing/trending',
 }

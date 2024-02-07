@@ -1,7 +1,7 @@
 <template>
      <div @click="handleModal"><i class="fa-solid fa-pen-to-square"></i></div>
     <a-modal v-model:open="open" title="Basic Modal" :ok-button-props="{ disabled: disabled || loading }"
-        @ok="() => handleSubmit(data?._id)" @cancel="handleClose">
+        @ok="() => handleSubmit(data?.id)" @cancel="handleClose">
         <div class="mb-5">
             <div class="mb-2 font-bold"><label>Name</label></div>
             <input type="text" class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder=""
@@ -49,7 +49,7 @@ const handleSubmit = async (id)=>{
     loading.value= true;
     try {
         const {name, logo} = brandData.value;
-        const res = await api.put(brandAdmin.editBrand, id, {name, logo});
+        const res = await api.put(brandAdmin.getBrands, id, {name, logo});
         notify(res);
         handleClose();
         refetch.value();

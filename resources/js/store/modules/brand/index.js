@@ -14,7 +14,7 @@ export const useBrandStore = defineStore("brand", {
       try {
         const res = await api.get(brandAdmin.getBrands);
         if (res.success) {
-          this.brands = res.result;
+          this.brands = res.brands?.data;
         }
       } catch (error) {
         console.log(error);

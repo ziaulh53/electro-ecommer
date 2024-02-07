@@ -20,7 +20,7 @@ return new class extends Migration
 
         Schema::create('category_brand', function (Blueprint $table) {
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('brand_id')->constrained('brands'); // Assuming brands table exists
+            $table->foreignId('brand_id')->constrained('brands');
             $table->primary(['category_id', 'brand_id']);
         });
     }

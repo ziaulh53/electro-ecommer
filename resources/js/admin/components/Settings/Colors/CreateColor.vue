@@ -25,7 +25,7 @@ const disabled = computed(() => !colorData.value.colorName || !colorData.value.c
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(colorAdmin.createColor, { ...colorData.value, colorCode: colorData.value.colorCode.toLowerCase() })
+        const res = await api.post(colorAdmin.getColors, { ...colorData.value, colorCode: colorData.value.colorCode.toLowerCase() })
         if (res.success) {
             notify(res);
             refetch.value();

@@ -2,7 +2,7 @@
     <div class="grid grid-cols-3">
         <div></div>
         <div class="my-20 border-2 rounded-md p-5 bg-white">
-            <h5 class="text-center mb-5 text-3xl">Welcome Back</h5>
+            <h5 class="text-center mb-5 text-3xl">Admin</h5>
             <div class="mb-4">
                 <div class="mb-2 font-bold"><label>Email</label></div>
                 <input type="email" class="w-full border-2 border-gray-300 rounded-lg p-2 px-4"

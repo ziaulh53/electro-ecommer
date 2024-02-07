@@ -38,7 +38,7 @@ const disabled = computed(() => !brandData.value.name);
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(brandAdmin.createBrand, { ...brandData.value })
+        const res = await api.post(brandAdmin.getBrands, { ...brandData.value })
         if (res.success) {
             notify(res);
             refetch.value();
@@ -53,7 +53,7 @@ const handleSubmit = async () => {
 const handleFile = async (e) => {
     try {
         const res = await api.fileUpload(e.target.files[0]);
-        brandData.value = { ...brandData.value, logo: res.result.url }
+        brandData.value = { ...brandData.value, logo: res.url }
     } catch (error) {
         console.log(error)
     }

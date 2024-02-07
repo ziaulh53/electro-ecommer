@@ -1,7 +1,7 @@
 <template>
     <span @click="handleModal" class="cursor-pointer"><i class="fa-solid fa-pen-to-square"></i></span>
     <a-modal v-model:open="open" title="Basic Modal" :ok-button-props="{ disabled: disabled || loading }"
-        @ok="() => handleSubmit(data?._id)" @cancel="handleClose">
+        @ok="() => handleSubmit(data?.id)" @cancel="handleClose">
         <EShopInput v-model="colorData.colorName" placeholder="Color name" label="Color Name" />
         <EShopInput v-model="colorData.colorCode" placeholder="Color code" label="Color Code" />
     </a-modal>
@@ -36,7 +36,7 @@ const handleSubmit = async (id) => {
     loading.value = true;
     try {
         const { colorName, colorCode } = colorData.value;
-        const res = await api.put(colorAdmin.editColor, id, { colorData: { colorName, colorCode: colorCode?.toLowerCase() } });
+        const res = await api.put(colorAdmin.getColors, id, { colorName, colorCode: colorCode?.toLowerCase() });
         notify(res);
         handleClose();
         refetch.value();

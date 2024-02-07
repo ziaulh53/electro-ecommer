@@ -1,7 +1,7 @@
 <template>
     <div @click="handleModal"><i class="fa-solid fa-pen-to-square"></i></div>
     <a-modal v-model:open="open" title="Basic Modal" :ok-button-props="{ disabled: disabled || loading }"
-        @ok="() => handleSubmit(data?._id)" @cancel="handleClose">
+        @ok="() => handleSubmit(data?.id)" @cancel="handleClose">
         <div class="mb-5">
             <div class="mb-2 font-bold"><label>Name</label></div>
             <input type="text" class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder=""
@@ -12,9 +12,9 @@
             <div>
                 <a-select v-model:value="categoryData.brands" mode="multiple" placeholder="Inserted are removed"
                     class="w-full rounded-lg" size="large">
-                    <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{ brand.name
+                    <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{ brand.name
                     }}</a-select-option>
-                   
+
                 </a-select>
             </div>
         </div>
@@ -49,7 +49,7 @@ const brandStore = useBrandStore();
 const { data, refetch } = toRefs(props)
 const open = ref(false)
 const loading = ref(false)
-const categoryData = ref({ ...data.value, brands: data.value.brands.map(({ _id, name }) => ({ key: _id, name })) })
+const categoryData = ref({ ...data.value, brands: data.value.brands.map(({ id, name }) => ({ key: id, name })) })
 
 const disabled = computed(() => !categoryData.value.name)
 const allBrands = computed(() => brandStore.brands)
@@ -67,7 +67,7 @@ const handleSubmit = async (id) => {
     try {
         const { name, brands, coverImage } = categoryData.value;
         console.log(brands)
-        const res = await api.put(categoryAdmin.editCategory, id, { name, coverImage, brands });
+        const res = await api.put(categoryAdmin.getCategory, id, { name, coverImage, brands });
         notify(res);
         handleClose();
         refetch.value();

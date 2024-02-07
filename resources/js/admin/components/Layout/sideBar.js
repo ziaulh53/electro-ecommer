@@ -1,32 +1,32 @@
 export const sideBar = [
     {
         label: 'Dashboard',
-        path: '/dashboard',
+        path: '/admin/dashboard',
         iconClass: 'fa-solid fa-chart-simple'
     },
     {
         label: 'Customers',
-        path: '/customers',
+        path: '/admin/customers',
         iconClass: 'fa-solid fa-users'
     },
     {
         label: 'Orders',
-        path: '/orders',
+        path: '/admin/orders',
         iconClass: 'fa-solid fa-bag-shopping'
     },
     {
         label: 'Category',
-        path: '/category',
+        path: '/admin/category',
         iconClass: 'fa-solid fa-bars'
     },
     {
         label: 'Home Page',
-        path: '/landing',
+        path: '/admin/landing',
         iconClass: "fa-solid fa-house"
     },
     {
         label: 'Settings',
-        path: '/settings',
+        path: '/admin/settings',
         iconClass: 'fa-solid fa-gear'
     },
 ];

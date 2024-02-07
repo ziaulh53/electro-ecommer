@@ -6,7 +6,7 @@
         </template>
         <template class="ant-card-actions" #actions>
             <EditBrand :data="data" :refetch="refetch"/>
-            <a-popconfirm title="Are you sure?" ok-type="danger" @confirm="() => handleDelete(data._id, refetch)">
+            <a-popconfirm title="Are you sure?" ok-type="danger" @confirm="() => handleDelete(data.id, refetch)">
                 <a href="#"><i class="fa-solid fa-trash text-red-600"></i></a>
             </a-popconfirm>
         </template>
@@ -30,7 +30,7 @@ const { data, refetch, } = toRefs(props);
 
 const handleDelete = async (id) => {
     try {
-        const res = await api.delete(brandAdmin.deleteBrand, id);
+        const res = await api.delete(brandAdmin.getBrands, id);
         if (res.success) {
             notify(res);
             refetch.value();

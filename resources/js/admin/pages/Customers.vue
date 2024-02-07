@@ -5,7 +5,7 @@
             <div class="bg-theme-color h-[2px]"></div>
         </div>
         <div>
-            <a-table :dataSource="allusers?.result" :columns="columns"/>
+            <a-table :dataSource="allusers?.data" :columns="columns"/>
         </div>
     </Layout>
 </template>
@@ -20,7 +20,8 @@ const loading = ref('');
 
 onMounted(async () => {
     loading.value= true;
-    allusers.value = await api.get(user.getUser);
+    const res = await api.get(user.getUser);
+    allusers.value = res?.users;
     loading.value= false
 })
 
