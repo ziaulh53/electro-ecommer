@@ -1,9 +1,10 @@
 <template>
+    {{ JSON.parse(selectedColors?.pivot?.images)[idx] }}
     <div v-if="selectedColors?._id" class="border-r-2 border-gray-300">
-        <VueMagnifier :src="selectedColors?.images[idx] || '/assets/logo.png'"
+        <VueMagnifier :src="JSON.parse(selectedColors?.pivot?.images)[0] || '/assets/logo.png'"
             class-name="w-[300] object-cover mb-4" height="500" style="{object-fit: cover;}" />
         <div class="flex justify-start">
-            <div v-for="(url, index) of selectedColors?.images" :key="url" @click="()=>onSelectImage(index)"
+            <div v-for="(url, index) of JSON.parse(selectedColors?.pivot?.images)" :key="url" @click="()=>onSelectImage(index)"
                 class="w-[70px] h-[70px] border-2 border-gray-400 cursor-pointer mr-2 relative">
                 <img :src="url || '/assets/logo.png'" class="w-full h-full" />
                 <div v-if="index!==idx" class="absolute bg-black bg-opacity-40 w-full h-full top-0"></div>

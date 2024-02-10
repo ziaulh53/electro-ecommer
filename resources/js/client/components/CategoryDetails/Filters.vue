@@ -9,8 +9,8 @@
             <h6 class="text-gray-500 mb-2">Brands</h6>
             <div>
                 <a-checkbox-group v-model:value="brandsState" @change="handleBrands" class="block">
-                    <div v-for="brand of brands" :key="brand._id" class="mb-1">
-                        <a-checkbox :value="brand._id">{{ brand?.name
+                    <div v-for="brand of brands" :key="brand.id" class="mb-1">
+                        <a-checkbox :value="brand.id">{{ brand?.name
                         }}</a-checkbox>
                     </div>
 

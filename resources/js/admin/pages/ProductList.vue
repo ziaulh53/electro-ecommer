@@ -1,15 +1,15 @@
 <template>
     <Layout>
         <PageTitle title="Product" />
-        <div class="my-5" v-if="categoryDetails?.result?._id">
-            <CreateProduct :refetch="fetchSingleCategory" :categoryData="categoryDetails?.result"
-                :allColors="allColors.result" />
+        <div class="my-5" v-if="categoryDetails?.id">
+            <CreateProduct :refetch="fetchSingleCategory" :categoryData="categoryDetails"
+                :allColors="allColors.data" />
         </div>
         <a-spin :spinning="loading">
-            <div class="h-[300px]" v-if="loading && !categoryDetails?.result?._id"></div>
-            <div class="grid grid-cols-4 gap-5" v-if="categoryDetails?.result?._id">
-                <SingleProduct v-for="product of categoryDetails.result?.products" :key="product._id" :product="product"
-                    :refetch="fetchSingleCategory" :allColors="allColors.result" :allBrands="categoryDetails?.result?.brands" />
+            <div class="h-[300px]" v-if="loading && !categoryDetails?.id"></div>
+            <div class="grid grid-cols-4 gap-5" v-if="categoryDetails?.id">
+                <SingleProduct v-for="product of categoryDetails?.products" :key="product.id" :product="product"
+                    :refetch="fetchSingleCategory" :allColors="allColors.data" :allBrands="categoryDetails?.brands" />
             </div>
         </a-spin>
 
@@ -27,10 +27,13 @@ const router = useRoute();
 const loading = ref(false);
 const allColors = ref([]);
 const categoryDetails = ref({});
+const allProducts = ref({});
+
 const fetchSingleCategory = async () => {
     loading.value = true
     try {
-        categoryDetails.value = await api.get(categoryAdmin.getCategory + '/' + router.params.id)
+       const res = await api.get(categoryAdmin.getCategory + router.params.id);
+       categoryDetails.value = res?.category;
     } catch (error) {
         console.log(error)
     }
@@ -38,7 +41,8 @@ const fetchSingleCategory = async () => {
 }
 const getAllColor = async () => {
     try {
-        allColors.value = await api.get(colorAdmin.getColors);
+        const res = await api.get(colorAdmin.getColors);
+        allColors.value = res?.colors;
     } catch (error) {
         console.log(error)
     }

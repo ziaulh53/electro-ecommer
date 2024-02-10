@@ -66,7 +66,6 @@ const handleSubmit = async (id) => {
     loading.value = true;
     try {
         const { name, brands, coverImage } = categoryData.value;
-        console.log(brands)
         const res = await api.put(categoryAdmin.getCategory, id, { name, coverImage, brands });
         notify(res);
         handleClose();

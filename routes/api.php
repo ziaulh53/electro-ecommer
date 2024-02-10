@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\FileUploadController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\TrendingController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\UsersController;
 use Illuminate\Http\Request;
@@ -37,12 +40,25 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::apiResource('/brand', BrandController::class);
             Route::apiResource('/color', ColorController::class);
             Route::apiResource('/category', CategoryController::class);
+            Route::apiResource('/product', ProductController::class);
+            Route::apiResource('/banner', BannerController::class);
+            Route::apiResource('/trending', TrendingController::class);
         });
     });
 
     // common
     Route::post('/file-upload', [FileUploadController::class, 'storeUploads']);
 });
+
+// public route
+Route::get('/landing/brands', [BrandController::class, 'index']);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/product/new-arrival', [ProductController::class, 'getNewArrival']);
+Route::get('/product/trending', [TrendingController::class, 'index']);
+Route::get('/banner', [BannerController::class, 'index']);
+Route::get('/category/{id}', [CategoryController::class, 'show']);
+Route::get('/product/{id}', [ProductController::class, 'show']);
+
 
 Route::post('/signup', [UserAuthController::class, 'userSignup']);
 Route::post('/signin', [UserAuthController::class, 'userLogin']);

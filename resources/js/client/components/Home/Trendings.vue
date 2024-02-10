@@ -1,7 +1,7 @@
 <template>
-    <router-link :to="'/product/' + data?._id">
+    <router-link :to="'/product/' + data?.id">
         <div class="border-2 rounded-lg bg-gray-200 relative">
-            <img :src="data?.colors[0]?.images[0] || '/assets/poster.jpg'"
+            <img :src="JSON.parse(data?.colors[0]?.pivot?.images)[0] || '/assets/poster.jpg'"
                 class="h-[200px] w-full object-cover rounded-t-md" />
             <div class="p-4">
                 <h6 class="text-base font-bold">{{ data?.name }}</h6>

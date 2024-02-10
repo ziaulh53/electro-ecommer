@@ -19,8 +19,13 @@ class Category extends Model
     /**
      * Get the brands associated with the category.
      */
-    public function brands()
+     public function brands()
     {
-        return $this->belongsToMany(Brand::class, 'brand_category');
+        return $this->belongsToMany(Brand::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

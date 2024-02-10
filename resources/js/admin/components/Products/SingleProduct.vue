@@ -1,6 +1,6 @@
 <template>
     <div class="hover:shadow-lg border-2 w-full p-5 relative">
-        <img :src="product?.colors[0].images[0] || '/assets/logo.png'" class="mb-5 w-full h-[250px] object-cover" />
+        <img :src="JSON.parse(product?.colors[0].pivot?.images)[0] || '/assets/logo.png'" class="mb-5 w-full h-[250px] object-cover" />
         <div>
             <h6 class="text-lg mb-2">{{ product?.name }}</h6>
             <p class="font-semibold mb-2">Price: <span class="text-gray-500">USD {{ product?.discountAvailable ?
@@ -41,7 +41,7 @@ const { refetch, product } = toRefs(props)
 
 const handleDelete = async () => {
     try {
-        const res = await api.delete(productAdmin.deleteProduct, product.value._id);
+        const res = await api.delete(productAdmin.getProdcuts, product.value.id);
         notify(res, refetch.value)
     } catch (error) {
         console.log(error)

@@ -12,7 +12,7 @@ export const useCategoryStore = defineStore("category", {
     async fetchCateogries() {
      const res = await api.get(categoryEndpoint.fetchCategory);
      if(res.success){
-        this.category = res?.result || [];
+        this.category = res?.categories || [];
      }
     },
   },

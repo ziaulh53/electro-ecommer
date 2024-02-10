@@ -6,8 +6,8 @@
         <div class="p-5 ">
             <div class="text-center text-lg text-gray-300 font-bold">Available Brands</div>
             <div class="flex flex-wrap gap-y-10 gap-x-5 mt-5">
-                <div v-for="brand of allBrands" :key="brand?._id" class="rounded-3xl">
-                    <router-link :to="'/brands/' + brand?._id">
+                <div v-for="brand of allBrands.data" :key="brand?.id" class="rounded-3xl">
+                    <router-link :to="'/brands/' + brand?.id">
                         <img :src="brand?.logo" class="w-[60px] h-[60px] rounded-3xl object-cover" />
                         <div class="text-center text-xs font-bold text-gray-300 mt-3"> {{ brand?.name }}</div>
                     </router-link>
@@ -29,7 +29,7 @@ const getAllBrands = async () => {
     loading.value = true
     try {
         const res = await api.get(landingEndpoint.getAllbrands)
-        allBrands.value = res?.result
+        allBrands.value = res?.brands
     } catch (error) {
         console.log(error)
     }

@@ -15,21 +15,21 @@
     <div class="flex">
         <div class="mr-20">
             <p class="text-gray-500 font-semibold">Category: <span class="text-blue-500"><router-link
-                        :to="'/category/' + data?.category?._id">{{
+                        :to="'/category/' + data?.category?.id">{{
                             data?.category?.name }}</router-link></span>
             </p>
         </div>
         <div class="mr-20">
             <p class="text-gray-500 font-semibold">Brand: <span class="text-blue-500"><router-link
-                        :to="'/brands/' + data?.brands?._id">{{
-                            data?.brands?.name }}</router-link></span></p>
+                        :to="'/brands/' + data?.brand?.id">{{
+                            data?.brand?.name }}</router-link></span></p>
         </div>
     </div>
     <div class="my-5">
         <span class="text-orange-500"><i class="fa-solid fa-palette"></i></span> Colors:
         <div class="flex mt-2">
-            <div v-for="({ color, _id }, idx) of data?.colors" :key="_id" @click="() => handleSelectColor(idx)"
-                :class="(selectedColors?.color?._id === color?._id ? 'border-2 border-black' : 'border border-gray-400') + ' w-[20px] h-[18px] rounded-full mr-2 cursor-pointer'"
+            <div v-for="({ color, id }, idx) of data?.colors" :key="id" @click="() => handleSelectColor(idx)"
+                :class="(selectedColors?.color?.id === color?.id ? 'border-2 border-black' : 'border border-gray-400') + ' w-[20px] h-[18px] rounded-full mr-2 cursor-pointer'"
                 :style="{ background: color?.colorCode }"></div>
         </div>
     </div>

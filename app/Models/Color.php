@@ -12,4 +12,9 @@ class Color extends Model
     protected $fillable = [
         'colorName', 'colorCode' 
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_colors')->withPivot('quantity', 'images');
+    }
 }

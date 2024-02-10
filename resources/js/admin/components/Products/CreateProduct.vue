@@ -20,7 +20,7 @@
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
                     </template>
                     <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color?.color"
-                        :header="allColors.find(cl => cl._id === color.color).colorName" :style="customStyle">
+                        :header="allColors.find(cl => cl.id === color.color_id)?.colorName" :style="customStyle">
                         <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
                             :all-colors="allColors" />
                     </a-collapse-panel>
@@ -28,9 +28,9 @@
                         <div class="mb-5">
                             <div class="mb-2 font-bold"><label>Color</label></div>
                             <div>
-                                <a-select v-model:value="colorState.color" placeholder="Inserted are removed"
+                                <a-select v-model:value="colorState.color_id" placeholder="Inserted are removed"
                                     class="w-full rounded-lg" size="large">
-                                    <a-select-option v-for="color of allColors" :key="color._id" :value="color._id">{{
+                                    <a-select-option v-for="color of allColors" :key="color.id" :value="color.id">{{
                                         color.colorName
                                     }}</a-select-option>
                                 </a-select>
@@ -55,16 +55,16 @@
             <div class="mb-5">
                 <div class="mb-2 font-bold"><label>Brands</label></div>
                 <div>
-                    <a-select v-model:value="productData.brands" placeholder="Inserted are removed"
+                    <a-select v-model:value="productData.brands_id" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
-                        <a-select-option v-for="brand of categoryData?.brands" :key="brand._id" :value="brand._id">{{
+                        <a-select-option v-for="brand of categoryData?.brands" :key="brand.id" :value="brand.id">{{
                             brand.name
                         }}</a-select-option>
                     </a-select>
                 </div>
             </div>
 
-            <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" />
+            <!-- <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" /> -->
         </div>
         <div class="grid md:grid-cols-2 gap-x-5">
             <div class="mb-6">
@@ -100,7 +100,7 @@ const props = defineProps({
     categoryData: Object,
     allColors: Array
 });
-const { refetch, categoryData } = toRefs(props);
+const { refetch, categoryData, allColors } = toRefs(props);
 const open = ref(false);
 const loading = ref(false);
 const content = ref(null);
@@ -110,21 +110,22 @@ const initialState = {
     price: '0',
     discountPrice: '0',
     discountAvailable: false,
-    quantity: '0',
     colors: [],
     description: '',
-    brands: '',
-    category: categoryData.value?._id,
+    brands_id: '',
+    category_id: categoryData.value?.id,
     newArrival: false
 }
 const productData = ref({ ...initialState });
 const colorState = ref({
-    color: '',
+    color_id: '',
+    colorName: '',
+    colorCode: '',
     images: [],
     quantity: '0'
 })
 
-const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.brands || !productData.value.colors.length)
+const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.brands_id || !productData.value.colors.length)
 const activeKey = ref(['1']);
 const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
@@ -151,15 +152,18 @@ const closeModal = () => {
 }
 
 // color
-const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity || !colorState.value.images.length)
 const handleAddColor = () => {
 
     let colors = productData.value.colors;
-    const { color, images, quantity } = colorState.value;
-    colors.push({ color, images, quantity: Number(quantity) });
+    const { color_id, images, quantity } = colorState.value;
+    const { colorName, colorCode } = allColors.value.find(cl => cl.id === color_id);
+    colors.push({ color_id, images, quantity: Number(quantity), colorCode, colorName });
     productData.value.colors = colors;
     colorState.value = {
-        color: '',
+        color_id: '',
+        colorCode: '',
+        colorName: "",
         images: [],
         quantity: 0
     }
@@ -171,7 +175,7 @@ const handleFile = async (e) => {
         const files = e.target.files;
         for (var i = 0; i < files.length; i++) {
             const res = await api.fileUpload(files[i]);
-            images.push(res.result.url);
+            images.push(res.url);
         }
         colorState.value.images = images;
     } catch (error) {
@@ -184,7 +188,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(productAdmin.createProduct, { productData: { ...productData.value, description: content?.value?.getHTML() } });
+        const res = await api.post(productAdmin.getProdcuts, { ...productData.value, description: content?.value?.getHTML() });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {

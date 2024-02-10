@@ -3,7 +3,7 @@
         <div class="my-10">
             <div class="grid md:grid-cols-7 gap-x-24 mb-14">
                 <div class="md:col-span-3">
-                    <ImageViewer v-if="!loading" :colors="product?.result?.colors" :selected-colors="selectedColors" />
+                    <ImageViewer v-if="selected-colors?.colorName" :selected-colors="currentColor" />
                     <EShopSkeleton v-if="loading" height="400px" />
                     <EShopSkeleton v-if="loading" height="70px" class="mt-5" />
                 </div>
@@ -29,13 +29,13 @@
                     </div>
                 </div>
             </div>
-            <ExploreMore v-if="product?.result" :category-id="product?.result?.category?._id" />
+            <!-- <ExploreMore v-if="product?.result" :category-id="product?.result?.category?._id" /> -->
         </div>
     </Layout>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { Layout } from '../components/Layout';
 import { api, productEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
@@ -48,7 +48,9 @@ const cartStore = useCartStore()
 
 
 const product = ref({});
-const selectedColors = ref({})
+const selectedColors = ref({});
+
+const currentColor = computed(()=>selectedColors.value);
 
 const loading = ref(false);
 

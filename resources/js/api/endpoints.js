@@ -12,7 +12,7 @@ export const auth = {
 }
 
 export const categoryEndpoint = {
-    fetchCategory: '/category',
+    fetchCategory: '/category/',
     fetchSingleCategory: '/category/',
 }
 export const productEndpoint = {
@@ -75,7 +75,7 @@ export const categoryAdmin = {
 }
 
 export const productAdmin = {
-    getProdcuts: '/admin/product',
+    getProdcuts: '/admin/product/',
     createProduct: '/admin/product/create',
     editProduct: '/admin/product/edit/',
     deleteProduct: '/admin/product/delete/',

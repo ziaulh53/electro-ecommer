@@ -6,7 +6,7 @@
             </h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            <router-link v-for="category of allCategories" :to="'/category/' + category?._id" :key="category?._id">
+            <router-link v-for="category of allCategories" :to="'/category/' + category?.id" :key="category?.id">
                 <div class="border-2 rounded-lg bg-gray-200">
                     <img :src="category?.coverImage || '/assets/poster.jpg'"
                         class="h-[200px] w-full object-cover rounded-t-md" />

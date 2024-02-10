@@ -34,7 +34,7 @@ export const adminRoutes = [
     },
     {
         path: "admin/forget-password",
-        name: "forget",
+        name: "admin-forget",
         component: ForgetPassword,
         meta: {
             requireAuth: false,
@@ -42,7 +42,7 @@ export const adminRoutes = [
     },
     {
         path: "admin/reset-password",
-        name: "reset",
+        name: "admin-reset",
         component: ResetPassword,
         meta: {
             requireAuth: false,
@@ -60,7 +60,7 @@ export const adminRoutes = [
     },
     {
         path: "customers",
-        name: "customers",
+        name: "admin-customers",
         component: Customers,
         meta: {
             requireAuth: true,
@@ -68,7 +68,7 @@ export const adminRoutes = [
     },
     {
         path: "orders",
-        name: "orders",
+        name: "admin-orders",
         component: Orders,
         meta: {
             requireAuth: true,
@@ -76,7 +76,7 @@ export const adminRoutes = [
     },
     {
         path: "order-details/:id",
-        name: "order-details",
+        name: "admin-order-details",
         component: OrderDetails,
         meta: {
             requireAuth: true,
@@ -84,7 +84,7 @@ export const adminRoutes = [
     },
     {
         path: "category",
-        name: "category",
+        name: "admin-category",
         component: Category,
         meta: {
             requireAuth: true,
@@ -92,7 +92,7 @@ export const adminRoutes = [
     },
     {
         path: "category/:id",
-        name: "product",
+        name: "admin-product",
         component: ProductList,
         meta: {
             requireAuth: true,
@@ -100,7 +100,7 @@ export const adminRoutes = [
     },
     {
         path: "landing",
-        name: "landing",
+        name: "admin-landing",
         component: LandingPage,
         meta: {
             requireAuth: true,
@@ -108,7 +108,7 @@ export const adminRoutes = [
     },
     {
         path: "settings",
-        name: "settings",
+        name: "admin-settings",
         component: Settings,
         meta: {
             requireAuth: true,

@@ -3,7 +3,7 @@
         <div class="h-full px-5 lg:px-20 flex items-center justify-between">
             <router-link to="/"><img :src="'/assets/logo.png'" class="w-[40px]" /></router-link>
             <div class="flex">
-                <router-link v-for="category of allCategories" :key="category._id" :to="'/category/' + category._id"
+                <router-link v-for="category of allCategories" :key="category.id" :to="'/category/' + category.id"
                     class="px-4 py-2  ml-2 text-gray-200 font-[100] hover:bg-slate-600">
                     <span>{{ category?.name }}</span>
                 </router-link>

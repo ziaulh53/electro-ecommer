@@ -18,19 +18,9 @@ return new class extends Migration
             $table->decimal('discountPrice', 10, 2)->nullable();
             $table->boolean('discountAvailable')->default(false);
             $table->boolean('newArrival')->default(false);
-            $table->integer('quantity')->default(0);
             $table->text('description')->nullable();
             $table->foreignId('brands_id')->constrained('brands');
             $table->foreignId('category_id')->constrained('categories');
-            $table->timestamps();
-        });
-
-        Schema::create('product_colors', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('color_id')->constrained('colors');
-            $table->integer('quantity')->default(0);
-            $table->json('images')->nullable();
             $table->timestamps();
         });
     }
@@ -41,6 +31,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('products');
-        Schema::dropIfExists('product_colors');
     }
 };

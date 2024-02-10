@@ -31,7 +31,7 @@
                             <div>
                                 <a-select v-model:value="colorState.color" placeholder="Inserted are removed"
                                     class="w-full rounded-lg" size="large">
-                                    <a-select-option v-for="color of allColors" :key="color._id" :value="color._id">{{
+                                    <a-select-option v-for="color of allColors" :key="color.id" :value="color.id">{{
                                         color.colorName
                                     }}</a-select-option>
                                 </a-select>
@@ -43,8 +43,8 @@
                             <div v-for="url of colorState.images" :key="url" class="inline-block mr-2">
                                 <img :src="url" class="h-[150px] w-[100px]" />
                             </div>
-                            <div v-if="!colorState.images.length"
-                                class="h-[200px] w-[150px] border-dashed border-2 bg-slate-100"></div>
+                            <!-- <div v-if="!colorState.images.length"
+                                class="h-[200px] w-[150px] border-dashed border-2 bg-slate-100"></div> -->
                             <div class="mt-5">
                                 <input type="file" multiple :onchange="handleFile" />
                             </div>
@@ -58,7 +58,7 @@
                 <div>
                     <a-select v-model:value="productData.brands" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
-                        <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{
+                        <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{
                             brand.name
                         }}</a-select-option>
                     </a-select>
@@ -124,7 +124,7 @@ const colorState = ref({
     quantity: '0'
 })
 
-const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.colors.length || !productData.value.brands)
+const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.colors?.length || !productData.value.brands)
 const activeKey = ref(['1']);
 const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
@@ -152,7 +152,7 @@ const closeModal = () => {
 }
 
 // color
-const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images?.length)
 const handleAddColor = () => {
 
     let colors = productData.value.colors;
