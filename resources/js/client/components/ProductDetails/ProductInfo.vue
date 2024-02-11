@@ -28,9 +28,9 @@
     <div class="my-5">
         <span class="text-orange-500"><i class="fa-solid fa-palette"></i></span> Colors:
         <div class="flex mt-2">
-            <div v-for="({ color, id }, idx) of data?.colors" :key="id" @click="() => handleSelectColor(idx)"
-                :class="(selectedColors?.color?.id === color?.id ? 'border-2 border-black' : 'border border-gray-400') + ' w-[20px] h-[18px] rounded-full mr-2 cursor-pointer'"
-                :style="{ background: color?.colorCode }"></div>
+            <div v-for="({ colorCode, id }, idx) of data?.colors" :key="id" @click="() => handleSelectColor(idx)"
+                :class="(selectedColors?.id === id ? 'border-2 border-black' : 'border border-gray-400') + ' w-[20px] h-[18px] rounded-full mr-2 cursor-pointer'"
+                :style="{ background: colorCode }"></div>
         </div>
     </div>
 </template>

@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\FileUploadController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TrendingController;
 use App\Http\Controllers\Api\UserAuthController;
@@ -29,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // user
     Route::middleware(['role:user'])->group(function () {
         Route::post('/signout', [UserAuthController::class, 'userSignout']);
+        Route::apiResource('/address', AddressController::class);
+        Route::apiResource('/order', OrderController::class);
     });
 
 
@@ -36,13 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::middleware(['role:super_admin,admin'])->group(function () {
             Route::post('/signout', [AdminAuthController::class, 'adminSignout']);
-            Route::get('/user',[UsersController::class, 'getUsers']);
+            Route::get('/user', [UsersController::class, 'getUsers']);
             Route::apiResource('/brand', BrandController::class);
             Route::apiResource('/color', ColorController::class);
             Route::apiResource('/category', CategoryController::class);
             Route::apiResource('/product', ProductController::class);
             Route::apiResource('/banner', BannerController::class);
             Route::apiResource('/trending', TrendingController::class);
+            Route::get('/order',[OrderController::class,'getAdminOrders']);
         });
     });
 

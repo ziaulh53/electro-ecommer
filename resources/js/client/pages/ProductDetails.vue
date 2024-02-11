@@ -3,7 +3,7 @@
         <div class="my-10">
             <div class="grid md:grid-cols-7 gap-x-24 mb-14">
                 <div class="md:col-span-3">
-                    <ImageViewer v-if="selected-colors?.colorName" :selected-colors="currentColor" />
+                    <ImageViewer :selected-colors="currentColor" />
                     <EShopSkeleton v-if="loading" height="400px" />
                     <EShopSkeleton v-if="loading" height="70px" class="mt-5" />
                 </div>
@@ -81,7 +81,7 @@ const handleSelectColor = async (idx) => {
 const handleAddCart = () => {
     const data = {
         ...product.value.result,
-        colors: selectedColors.value,
+        colors: {...selectedColors.value, images: JSON.parse(selectedColors.value.pivot.images)},
         quantity: 1
     }
     cartStore.userAddCart(data)

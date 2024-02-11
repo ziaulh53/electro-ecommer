@@ -26,6 +26,7 @@
                         <Billing v-if="current === 1" :billing-address="billingAddress" />
                         <Payment v-if="current === 2" :handlePayment="handlePayment" :total-price="totalPrice" />
                     </div>
+                    <button @click="handlePayment">paaa</button>
                     <div class="text-right mt-5">
                         <EShopButton v-if="current > 0" btn-text="Previous" :onclick="handlePrev" class="mr-5" />
                         <EShopButton v-if="current < 2" btn-text="Next" :onclick="handleNext"
@@ -104,15 +105,22 @@ const handleShippingAddress = (value) => {
 const handlePayment = async (token) => {
     const items = userCart.shoppingCart?.map(item => ({
         ...item,
+        product_id:item.id,
+        color_id: item.colors.id,
         brands: { name: item?.brands?.name, logo: item?.brands?.logo },
         category: { name: item?.category?.name }
     }))
-    const res = await api.post(orderEndpoint.createOrder, { token, items, shippingAddress: shippingAddress.value, billingAddress: billingAddress.value })
+    const res = await api.post(orderEndpoint.getOrders,
+        {
+            token:token?.id, items, shippingAddress: JSON.stringify(shippingAddress.value),
+            billingAddress: JSON.stringify(billingAddress.value)
+        })
     if (res.success) {
         notify(res);
         router.push({ name: 'order-confirmation' })
         userCart.clearCart()
-    } else if (res?.isStockout) {
+    }
+    else if (res?.isStockout) {
         notify(res);
         router.push({ name: 'stock-out' })
         userCart.clearCart()

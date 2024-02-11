@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading" class="grid grid-cols-3 gap-5 mb-5">
-        <AddressItem v-for="data of allAddress.result" :key="data?._id" :address="data" :refetch="fetchAddress" />
+        <AddressItem v-for="data of allAddress" :key="data?.id" :address="data" :refetch="fetchAddress" />
     </div>
     <div v-if="loading" class="grid grid-cols-3 gap-5 mb-5">
         <EShopSkeleton v-for="i of 3" :key="i" height="280px"/>
@@ -26,7 +26,7 @@ const open = ref(false);
 const addressData = ref({
     firstName: '',
     lastName: '',
-    apertment: '',
+    apartment: '',
     phone: '',
     address: '',
     city: '',
@@ -35,12 +35,13 @@ const addressData = ref({
     country: ''
 })
 
-const disabled = computed(() => !addressData?.value.firstName || !addressData?.value.lastName || !addressData?.value.apertment || !addressData?.value.address || !addressData?.value.phone || !addressData?.value.zipCode || !addressData?.value.city || !addressData?.value.state || !addressData?.value.country)
+const disabled = computed(() => !addressData?.value.firstName || !addressData?.value.lastName || !addressData?.value.apartment || !addressData?.value.address || !addressData?.value.phone || !addressData?.value.zipCode || !addressData?.value.city || !addressData?.value.state || !addressData?.value.country)
 
 const fetchAddress = async () => {
     loading.value = true;
     try {
-        allAddress.value = await api.get(addressEndpoint.getAddress)
+        const res = await api.get(addressEndpoint.getAddress);
+        allAddress.value = res?.addresses;
     } catch (error) {
         console.log(error)
     }
@@ -52,7 +53,7 @@ onMounted(() => {
 
 const handleAddAddress = async () => {
     try {
-        const res = await api.post(addressEndpoint.createAddress, { address: { ...addressData.value } });
+        const res = await api.post(addressEndpoint.getAddress, { ...addressData.value });
         notify(res, fetchAddress)
         open.value = false;
     } catch (error) {

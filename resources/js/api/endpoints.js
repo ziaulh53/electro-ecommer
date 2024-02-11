@@ -28,7 +28,7 @@ export const landingEndpoint = {
 }
 
 export const orderEndpoint = {
-    getOrders: '/order',
+    getOrders: '/order/',
     createOrder: '/order/create',
     getSingleOrder: '/order/',
     updateStatus: '/order/update-status/'
@@ -40,10 +40,7 @@ export const wishEndpoint = {
 }
 
 export const addressEndpoint = {
-    getAddress: '/address',
-    createAddress: '/address/create',
-    editAddress: '/address/edit/',
-    deleteAddress: '/address/delete/',
+    getAddress: '/address/',
 }
 
 

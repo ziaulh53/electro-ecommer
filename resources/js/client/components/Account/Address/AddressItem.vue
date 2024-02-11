@@ -2,7 +2,7 @@
     <a-card class="bg-white" :hoverable="true">
         <div>
             <p class="font-semibold text-lg">{{ address?.firstName + " " + address?.lastName }}</p>
-            <p class="text-base">{{ address?.apertment }} , {{ address?.address }}</p>
+            <p class="text-base">{{ address?.apartment }} , {{ address?.address }}</p>
             <p class="text-base">{{ address?.city }}, {{ address?.state }}-{{ address?.zipCode }} , {{ address?.country }}</p>
             <p class="text-base"> <i class="fa-solid fa-phone text-sm mr-2"></i>{{ address?.phone }}</p>
         </div>
@@ -30,7 +30,7 @@ const { address, refetch } = toRefs(props);
 const addressData = ref({
     firstName: address?.value.firstName,
     lastName: address?.value.lastName,
-    apertment: address?.value.apertment,
+    apartment: address?.value.apartment,
     phone: address?.value.phone,
     address: address?.value.address,
     city: address?.value.city,
@@ -40,12 +40,12 @@ const addressData = ref({
 })
 
 const open = ref(false);
-const disabled = computed(() => !addressData?.value.firstName || !addressData?.value.lastName || !addressData?.value.apertment || !addressData?.value.address || !addressData?.value.phone || !addressData?.value.zipCode || !addressData?.value.city || !addressData?.value.state || !addressData?.value.country)
+const disabled = computed(() => !addressData?.value.firstName || !addressData?.value.lastName || !addressData?.value.apartment || !addressData?.value.address || !addressData?.value.phone || !addressData?.value.zipCode || !addressData?.value.city || !addressData?.value.state || !addressData?.value.country)
 
 
 const handleDelete = async () => {
     try {
-        const res = await api.delete(addressEndpoint.deleteAddress, address.value?._id);
+        const res = await api.delete(addressEndpoint.getAddress, address.value?.id);
         notify(res, refetch.value)
     } catch (error) {
         console.log(error)
@@ -57,7 +57,7 @@ const handleOpenModal = () => {
 }
 const handleUpdate = async () => {
     try {
-        const res = await api.put(addressEndpoint.editAddress, address.value?._id, { address: { ...addressData.value } });
+        const res = await api.put(addressEndpoint.getAddress, address.value?.id, { ...addressData.value });
         notify(res, refetch.value)
     } catch (error) {
         console.log(error)

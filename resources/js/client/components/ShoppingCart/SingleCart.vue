@@ -5,7 +5,7 @@
         </div>
         <div class="ml-4">
             <div class="font-bold text-sm mb-5">{{ cart?.name }}</div>
-            <div class="text-red-500 text-xs">Color: {{ cart?.colors?.color?.colorName }}</div>
+            <div class="text-red-500 text-xs">Color: {{ cart?.colors?.colorName }}</div>
             <!-- <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a> -->
         </div>
     </div>
