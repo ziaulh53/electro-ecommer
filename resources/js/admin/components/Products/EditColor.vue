@@ -2,9 +2,9 @@
     <div class="mb-5">
         <div class="mb-2 font-bold"><label>Color</label></div>
         <div>
-            <a-select v-model:value="colorState.color" placeholder="Inserted are removed" class="w-full rounded-lg"
+            <a-select v-model:value="colorState.color_id" placeholder="Inserted are removed" class="w-full rounded-lg"
                 size="large">
-                <a-select-option v-for="color of allColors" :key="color._id" :value="color._id">{{
+                <a-select-option v-for="color of allColors" :key="color.id" :value="color.id">{{
                     color.colorName
                 }}</a-select-option>
             </a-select>
@@ -37,19 +37,22 @@ const props = defineProps({
     allColors: Array,
     allBrands: Array
 });
-const { colorstate, handleUpdateColor, idx } = toRefs(props);
+const { colorstate, handleUpdateColor, idx, allColors } = toRefs(props);
 const colorState = ref({
-    color: colorstate.value.color,
+    color_id: colorstate.value.color_id,
     images: colorstate.value.images,
-    quantity: String(colorstate.value.quantity)
+    quantity: String(colorstate.value.quantity),
+    colorName: colorstate.value?.colorName,
+    colorCode: colorstate.value?.colorCode,
 })
 
 
 // color
-const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity || !colorState.value.images.length)
 const handleEditColor = () => {
-    const { color, images, quantity } = colorState.value;
-    colorState.value = { color, images, quantity: Number(quantity) };
+    const { color_id, images, quantity } = colorState.value;
+    const { colorName, colorCode } = allColors.value?.find(cl => cl.id === color_id);
+    colorState.value = { color_id, colorName: colorName, colorCode, images, quantity: Number(quantity) };
     handleUpdateColor.value(colorState.value, idx.value)
 }
 

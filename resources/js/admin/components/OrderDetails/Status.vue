@@ -21,9 +21,10 @@
         <EShopInput label="Type 'confirm'" v-model="confirm" placeholder="confirm" />
         <EShopInput label="Why cancelled this order?" v-model="cancelNote" placeholder="Short note" :is-text-area="true" />
     </a-modal>
-    <a-modal v-model:open="openShipModal" title="Shipping Details" :ok-button-props="{type: 'primary', disabled:disabledShipped, loading }"
+    <a-modal v-model:open="openShipModal" title="Shipping Details"
+        :ok-button-props="{ type: 'primary', disabled: disabledShipped, loading }"
         @ok="() => onUpdateStatus(ORDER_STATUS.Shipped)">
-        <EShopInput label="Provider name" v-model="logistic.name" placeholder="Company name" />
+        <EShopInput label="Provider name" v-model="logistic.provider" placeholder="Company name" />
         <EShopInput label="Tracking url" v-model="logistic.trackingUrl" placeholder="tracking url" />
     </a-modal>
 </template>
@@ -32,7 +33,7 @@
 import { ref, computed, toRefs } from 'vue';
 import { getStatusColor, notify } from '../../../helpers';
 import { EShopInput } from '../shared';
-import { api, orderEndpoint } from '../../../api';
+import { api } from '../../../api';
 import { ORDER_STATUS } from '../../../constant';
 
 const props = defineProps({
@@ -46,18 +47,22 @@ const openShipModal = ref(false);
 const confirm = ref("");
 const cancelNote = ref("");
 const logistic = ref({
-    name: data?.logistics?.name,
+    provider: data?.logistics?.provider,
     trackingUrl: data?.logistics?.trackingUrl
 });
 const loading = ref(false);
 
 const disabled = computed(() => confirm.value !== 'confirm')
-const disabledShipped = computed(() => !logistic.value.name || !logistic.value.trackingUrl)
+const disabledShipped = computed(() => !logistic.value.provider || !logistic.value.trackingUrl)
 
 const onUpdateStatus = async (status) => {
     loading.value = true;
     try {
-        const res = await api.put(orderEndpoint.updateStatus, data?.value?._id, { status, logistics: logistic.value, cancelNote: cancelNote.value });
+        const res = await api.put('admin/order/', data?.value?.id,
+            {
+                chargeId: data?.value.payment?.chargeId, status, 
+                logistics: logistic.value, cancelNote: cancelNote.value
+            });
         notify(res, refetch.value())
 
     } catch (error) {
@@ -67,7 +72,7 @@ const onUpdateStatus = async (status) => {
     openShipModal.value = false;
     confirm.value = "";
     logistic.value = {
-        name: '',
+        provider: '',
         trackingUrl: ''
     }
     loading.value = false;

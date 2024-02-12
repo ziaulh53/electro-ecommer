@@ -4,7 +4,7 @@
         <div class="mb-5">
             <OrderFilters :filter-submit="handleSubmitFilter" />
         </div>
-        <OrderTable :filter-submit="fetchOrders" :all-orders="allOrders?.result?.orders" :loading="loading" />
+        <OrderTable :filter-submit="fetchOrders" :all-orders="allOrders?.orders" :loading="loading" />
         <div class="text-right mt-5">
             <a-pagination :total="totalCount" :limit="1" :current="current" :page-size="15" @change="handleFilter" />
         </div>
@@ -35,7 +35,7 @@ const totalCount = ref(2);
 const fetchOrders = async () => {
     loading.value = true
     try {
-        allOrders.value = await api.get(orderEndpoint.getOrders, { ...filters.value, page: current.value });
+        allOrders.value = await api.get('admin/order', { ...filters.value, page: current.value });
         totalCount.value = allOrders.value?.result?.count
     } catch (error) {
         console.log(error)

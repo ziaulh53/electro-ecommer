@@ -32,7 +32,7 @@ const handleUpdateProfile = async () => {
     loading.value = true;
     const res = await changePassword(profileData.value);
     if (res.success) {
-        userLogout();
+        userLogout('/signout');
     }
     loading.value = false;
 }

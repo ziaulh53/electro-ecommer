@@ -3,21 +3,21 @@
         <div class="grid grid-cols-2 gap-5 mb-5">
             <div>
                 <h2 class="text-lg font-semibold mb-5">#ORDER ID:
-                    <span v-if="!loading" class="bg-white px-4 py-1 border border-gray-300 text-gray-500">{{ order?.result?.orderId
+                    <span v-if="!loading" class="bg-white px-4 py-1 border border-gray-300 text-gray-500">{{ order?.order?.orderId
                     }}</span>
                 </h2>
                 <EShopSkeleton v-if="loading" type="content" :conten-number="3"/>
-                <AddressDetails v-if="!loading" :data="order?.result?.shippingAddress" title="Shipping Details" />
+                <AddressDetails v-if="!loading" :data="order?.order?.shippingAddress" title="Shipping Details" />
             </div>
             <div>
-                <Status :data="order?.result" :refetch="getOrderDetails"/>
+                <Status :data="order?.order" :refetch="getOrderDetails"/>
                 <EShopSkeleton v-if="loading" type="content" :conten-number="4"/>
-                <AddressDetails v-if="!loading" :data="{...order?.result?.billingAddress,...order?.result?.payment}" title="Billing Details" type="billing"/>
+                <AddressDetails v-if="!loading" :data="{...order?.order?.billingAddress,...order?.order?.payment}" title="Billing Details" type="billing"/>
             </div>
         </div>
         <div class="mb-5">
             <EShopSkeleton v-if="loading" type="box" height="200px"/>
-            <OrderItems v-if="Array.isArray(order?.result?.items) && !loading" :data="order?.result?.items" />
+            <OrderItems v-if="Array.isArray(order?.order?.items) && !loading" :data="order?.order?.items" />
         </div>
     </Layout>
 </template>

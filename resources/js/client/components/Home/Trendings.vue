@@ -37,6 +37,6 @@ defineProps({
 })
 
 const checkAvailability = (colors = []) => {
-    return Math.max(...colors?.map(item => item.quantity)) > 1 ? true : false
+    return Math.max(...colors?.map(item => item?.pivot?.quantity)) > 1 ? true : false
 }
 </script>

@@ -19,8 +19,8 @@
                     <template #expandIcon="{ isActive }">
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
                     </template>
-                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color?.color"
-                        :header="allColors.find(cl => cl._id === color.color)?.colorName" :style="customStyle">
+                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color?.id"
+                        :header="allColors.find(cl => cl.id === color.color_id)?.colorName" :style="customStyle">
                         <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
                             :allColors="allColors" />
 
@@ -56,7 +56,7 @@
             <div class="mb-5">
                 <div class="mb-2 font-bold"><label>Brands</label></div>
                 <div>
-                    <a-select v-model:value="productData.brands" placeholder="Inserted are removed"
+                    <a-select v-model:value="productData.brands_id" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
                         <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{
                             brand.name
@@ -70,7 +70,8 @@
             <div class="mb-6">
                 <div class="mb-2 font-bold"><label>Description</label></div>
                 <div>
-                    <quill-editor ref="content" :options="editorOptions" :content="productData?.description" content-type="html"/>
+                    <quill-editor ref="content" :options="editorOptions" :content="productData?.description"
+                        content-type="html" />
                 </div>
             </div>
             <div class="mb-5">
@@ -112,19 +113,24 @@ const initialState = {
     discountPrice: String(productDetails.value?.discountPrice),
     discountAvailable: productDetails.value?.discountAvailable,
     quantity: String(productDetails.value?.quantity),
-    colors: productDetails.value?.colors,
+    colors: productDetails.value?.colors?.map(cl => ({
+        color_id:cl?.id,
+        colorName: cl?.colorName,
+        colorCode: cl?.colorCode,
+        quantity: cl?.pivot?.quantity,
+        images: JSON.parse(cl?.pivot?.images)
+    })),
     description: productDetails.value?.description,
-    brands: productDetails.value?.brands?._id,
+    brands_id: productDetails.value?.brands_id,
+    category_id: productDetails.value?.category_id,
     newArrival: productDetails?.newArrival
 }
 const productData = ref({ ...initialState });
 const colorState = ref({
-    color: '',
-    images: [],
-    quantity: '0'
+    ...initialState.colors
 })
 
-const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.colors?.length || !productData.value.brands)
+const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.colors?.length || !productData.value.brands_id)
 const activeKey = ref(['1']);
 const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
@@ -185,7 +191,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.put(productAdmin.editProduct, productDetails.value._id, { productData: { ...productData.value, description: content.value.getHTML() } });
+        const res = await api.put(productAdmin.getProdcuts, productDetails.value.id,{ ...productData.value, description: content.value.getHTML() });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {

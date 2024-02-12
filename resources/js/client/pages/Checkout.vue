@@ -26,7 +26,6 @@
                         <Billing v-if="current === 1" :billing-address="billingAddress" />
                         <Payment v-if="current === 2" :handlePayment="handlePayment" :total-price="totalPrice" />
                     </div>
-                    <button @click="handlePayment">paaa</button>
                     <div class="text-right mt-5">
                         <EShopButton v-if="current > 0" btn-text="Previous" :onclick="handlePrev" class="mr-5" />
                         <EShopButton v-if="current < 2" btn-text="Next" :onclick="handleNext"

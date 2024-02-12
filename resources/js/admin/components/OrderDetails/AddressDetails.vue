@@ -10,11 +10,11 @@
         <p class="text-base">{{ data?.state }}, {{ data?.country }}.</p>
 
         <div v-if="type === 'billing'" class="mt-3">
-            <div class="text-lg font-semibold uppercase mb-3">Payment Gateway</div>
-            <p>Card type: <img :src="data?.cardType == 'visa' ? '/assets/visa.png' : '/assets/master.png'"
+            <div class="text-lg font-semibold uppercase mb-3">Payment Channel</div>
+            <p>Card type: <img :src="data?.method == 'Visa' ? '/assets/visa.png' : '/assets/master.png'"
                     class="inline-block h-[15px]" /> by <a href="https://stripe.com/en-gb-us" target="_blank"
                     class="font-bold italic text-blue-700">Stripe</a></p>
-            <p>Card: * * * * * * {{ data?.cardNo }}</p>
+            <p>Card: * * * * * * {{ data?.last4 }}</p>
         </div>
     </div>
 </template>

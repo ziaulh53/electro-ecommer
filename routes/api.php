@@ -31,10 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // user
     Route::middleware(['role:user'])->group(function () {
         Route::post('/signout', [UserAuthController::class, 'userSignout']);
+        Route::post('/update-profile', [UserAuthController::class,'userUpdateProfile']);
+        Route::post('/change-email-request', [UserAuthController::class,'userUpdateEmail']);
+        Route::post('/change-password', [UserAuthController::class,'userUpdatePassword']);
+        
+
         Route::apiResource('/address', AddressController::class);
         Route::apiResource('/order', OrderController::class);
+        Route::get('/order/{id}', [OrderController::class, 'getSingleOrder']);
     });
-
 
     //admin
     Route::prefix('/admin')->group(function () {
@@ -47,7 +52,10 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::apiResource('/product', ProductController::class);
             Route::apiResource('/banner', BannerController::class);
             Route::apiResource('/trending', TrendingController::class);
-            Route::get('/order',[OrderController::class,'getAdminOrders']);
+            Route::get('/order', [OrderController::class, 'getAdminOrders']);
+            Route::put('/order/{id}', [OrderController::class, 'updateOrderAdmin']);
+            Route::get('/order/{id}', [OrderController::class, 'getSingleOrder']);
+            // Route::delete('/order/{id}',[OrderController::class,'destroy']);
         });
     });
 
@@ -65,11 +73,11 @@ Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 
 
+
 Route::post('/signup', [UserAuthController::class, 'userSignup']);
 Route::post('/signin', [UserAuthController::class, 'userLogin']);
-
-// Route::post('/forgot-password', [UserPasswordResetController::class, 'forgotPassword'])->name('password.email');
-// Route::post('/reset-password', [UserPasswordResetController::class, 'resetPassword'])->name('password.reset');
+Route::post('/forgot-password',[UserAuthController::class, 'userResetPasswordRequest'])->name('password.email');
+Route::post('/reset-password', [UserAuthController::class, 'userResetPassword'])->name('password.reset');
 
 
 // admin routes

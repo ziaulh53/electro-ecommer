@@ -15,7 +15,7 @@ export const useAuthStore = defineStore("auth", {
         user: (state) => state.auth,
     },
     actions: {
-        async userRegistration(endpoint,data) {
+        async userRegistration(endpoint, data) {
             try {
                 const res = await api.post(endpoint, data);
                 notify(res);
@@ -75,7 +75,7 @@ export const useAuthStore = defineStore("auth", {
         async updateProfile(data) {
             try {
                 const res = await api.post(auth.editProfile, {
-                    profileData: { ...data },
+                    ...data,
                 });
                 notify(res);
                 if (res.success) {

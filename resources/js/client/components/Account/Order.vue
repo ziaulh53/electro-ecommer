@@ -29,8 +29,8 @@
         <EShopSkeleton v-for="(_, idx) of new Array(6).fill(null)" :key="idx" height="350px" />
     </div>
     <div v-if="!loading" class="grid grid-cols-3 gap-5">
-        <router-link v-for="({ _id, items, status, orderId }) of allOrders?.result" :to="'/order-details/' + _id"
-            :key="_id">
+        <router-link v-for="({ id, items, status, orderId }) of allOrders?.orders" :to="'/order-details/' + id"
+            :key="id">
             <div class="border-2 rounded-lg bg-white">
                 <img :src="items[0]?.colors?.images?.[0] || '/assets/poster.jpg'"
                     class="h-[250px] w-full object-cover rounded-t-md" />

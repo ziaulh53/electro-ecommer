@@ -38,9 +38,8 @@ const openModal = () => {
 
 const handleSubmit = async()=>{
     loading.value = true;
-    
     try {
-        const res = await api.put(orderEndpoint.updateStatus, data?.value?._id, {status: 'Cancelled'});
+        const res = await api.put(orderEndpoint.updateStatus, data?.value?.id, {status: 'Cancelled'});
         notify(res, refetch.value())
         
     } catch (error) {

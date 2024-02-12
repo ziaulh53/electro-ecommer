@@ -39,13 +39,15 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-            'password' =>'users'
+            'password' =>'users',
+            'reset_url'=>'http://localhost:3015/reset-password'
         ],
 
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
-            'password'=>'admins'
+            'password'=>'admins',
+            'reset_url'=>'http://localhost:3015/admin/reset-password'
         ],
     ],
 
@@ -80,6 +82,13 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets_admin',
+            'expire' => 60,
+            'throttle' => 60,
         ],
     ],
 

@@ -18,11 +18,11 @@ class Order extends Model
     ];
     protected $fillable = [
         'user_id', 'orderId', 'items', 'shippingAddress', 'billingAddress',
-        'payment', 'status', 'totalPrice'
+        'payment', 'status', 'totalPrice','logistics', 'cancelNote'
     ];
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

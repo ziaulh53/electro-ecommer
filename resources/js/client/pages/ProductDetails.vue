@@ -14,12 +14,12 @@
                     <ProductInfo v-if="!loading" :data="product?.result" :handleSelectColor="handleSelectColor"
                         :selected-colors="selectedColors" />
                     <div v-if="!loading" class="my-5">
-                        <EShopButton :disabled="selectedColors?.quantity < 2" iconclass="fa-solid fa-bag-shopping"
+                        <EShopButton :disabled="selectedColors?.pivot?.quantity < 2" iconclass="fa-solid fa-bag-shopping"
                             classes="font-semibold mr-10" btn-text="ADD CART" :onclick="handleAddCart" />
                         <AddWish />
                     </div>
 
-                    <div v-if="selectedColors?.quantity < 2">
+                    <div v-if="selectedColors?.pivot?.quantity < 2">
                         <button class="px-8 py-2 bg-red-500 text-white">SOLD OUT</button>
                     </div>
 

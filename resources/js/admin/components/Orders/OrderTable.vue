@@ -9,7 +9,7 @@
                 <p>Time: {{ moment(record.createdAt).format('LT') }}</p>
             </template>
             <template v-if="column.key === 'email'">
-                <p>{{ record?.user?.email }}</p>
+                <p>{{ record?.users?.email }}</p>
             </template>
             <template v-if="column.key === 'phone'">
                 <p>{{ record?.shippingAddress?.phone }}</p>
@@ -21,7 +21,7 @@
                 <a-tag :color="getStatusColor(record.status)" class="text-sm">{{ record?.status }}</a-tag>
             </template>
             <template v-if="column.key === 'action'">
-                <router-link :to="'/order-details/' + record?._id">
+                <router-link :to="'/admin/order-details/' + record?.id">
                     <span class="text-blue-500 font-semibold underline">Details</span>
                 </router-link>
             </template>

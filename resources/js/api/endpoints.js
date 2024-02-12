@@ -3,12 +3,12 @@ export const auth = {
     login: '/signin',
     reg: '/signup',
     logout: '/signout',
-    forgetPassword: '/auth/forget-password',
-    resetPassword: '/auth/reset-password',
-    editProfile: '/auth/edit-profile',
-    changePassword: '/auth/change-password',
-    changeEmailRequest: '/auth/change-email-request',
-    changeEmail: '/auth/change-email'
+    forgetPassword: '/forgot-password',
+    resetPassword: '/reset-password',
+    editProfile: '/update-profile',
+    changePassword: '/change-password',
+    changeEmailRequest: '/change-email-request',
+    changeEmail: '/change-email'
 }
 
 export const categoryEndpoint = {

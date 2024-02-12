@@ -46,7 +46,7 @@ const disabled = computed(() => !credentialData.value.password || credentialData
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await userStore.resetPassword({ newPassword: credentialData.value.password, token: route.query.security_key })
+        const res = await userStore.resetPassword({ password: credentialData.value.password, token: route.query.token, email: route.query.email})
         if(res.success){
             router.push({name:'signin'})
         }

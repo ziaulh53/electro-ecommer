@@ -10,34 +10,44 @@ use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Charge;
+use Stripe\Refund;
 use Stripe\Stripe;
 
+
+Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user= Auth::user();
-        $orders = Order::query()->where('user_id', $user->id)->get();
+        $userId = Auth::id();
+
+        $query = Order::query()->where('user_id', $userId);
+        if (!empty($request->status)) {
+            $status = $request->validate([
+                'status' => 'required|in:Pending,Processing,Shipped,Cancelled,Accepted',
+            ])['status'];
+
+            $query->where('status', $status);
+        }
+
+        $orders = $query->get();
         return response(['orders' => $orders]);
     }
 
     public function getAdminOrders()
     {
-        $orders = Order::query()->get();
+        $orders = Order::with('users')->get();
         return response(['orders' => $orders]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getSingleOrder(Request $request, string $id)
     {
-        //
+        $order = Order::with('users')->find($id);
+        return response(['order' => $order]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -60,19 +70,19 @@ class OrderController extends Controller
             return response(['success' => false, 'msg' => 'Stock Out']);
         }
         $data['totalPrice'] = $totalPrice;
-        $uniqueId = strtoupper("ESHOP-" . uniqid() . time());
+        $uniqueId = strtoupper("ESHOP-" . substr(uniqid(), -6));
         $data['orderId'] = $uniqueId;
-        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+
         $charge = Charge::create([
-            'amount' => $data['totalPrice'] * 100,
+            'amount' => ($data['totalPrice'] + 80) * 100,
             'currency' => 'usd',
             'source' => $request['token'],
-            'description' => 'Example Charge',
+            'description' => $uniqueId,
         ]);
 
         $payment['last4'] = $charge->source->last4;
         $payment['method'] = $charge->source->brand;
-        $payment['chargeId'] = $charge->source->id;
+        $payment['chargeId'] = $charge->id;
         $data['payment'] = $payment;
         $data['status'] = 'Pending';
         $user = Auth::user();
@@ -85,8 +95,6 @@ class OrderController extends Controller
             updateColorQuantity($product);
         }
         return response(['success' => true, 'msg' => 'Order Placed.', 'data' => $data]);
-
-       
     }
 
     /**
@@ -94,15 +102,9 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $user = Auth::user();
+        $order = Order::query()->where('user_id', $user->id)->find($id);
+        return response(['order' => $order]);
     }
 
     /**
@@ -110,7 +112,34 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'status' => 'Cancelled',
+            'cancelNote' => 'From user end'
+        ];
+        $order = Order::query()->find($id);
+        $order->update($data);
+        return response(['success' => true, 'msg' => 'You will refund within 3 working days']);
+    }
+
+    public function updateOrderAdmin(Request $request, string $id)
+    {
+        $data['status'] = $request->status;
+        if ($request->status === 'Shipped') {
+            $data['logistics'] = [
+                "provider" => $request->logistics['provider'],
+                "trackingUrl" => $request->logistics['trackingUrl'],
+            ];
+        } elseif ($request->status === 'Cancelled') {
+            $data['cancelNote'] =  $request->cancelNote;
+            Refund::create([
+                'charge' => $request->chargeId,
+            ]);
+            $data['refunded'] = true;
+        }
+
+        $order = Order::query()->find($id);
+        $order->update($data);
+        return response(['success' => true, 'msg' => 'Status updated successfully']);
     }
 
     /**
@@ -118,7 +147,8 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $order = Order::query()->find($id);
+        // $order->delete();
     }
 }
 
