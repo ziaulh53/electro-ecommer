@@ -80,7 +80,7 @@ class AdminAuthController extends Controller
     public function adminSignout()
     {
         /** @var Admin $user */
-        $user  = Auth::guard('admin')->user();
+        $user  = Auth::user();
         $user->currentAccessToken()->delete;
         return response(['success' => true]);
     }

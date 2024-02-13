@@ -1,10 +1,11 @@
 <template>
-    <EShopButton btn-text="VIEW" :onclick="handleOpen" icon-class="fa-solid fa-pen-to-square text-white" />
-    <a-modal v-model:open="open" title="Update Product Form" width="80%" wrap-class-name="w-full" :mask-closable="false"
-        @ok="handleSubmit" :footer="false" :ok-button-props="{ disabled: disabled || loading, class: 'btn-class' }">
+    <!-- <EShopButton btn-text="VIEW" :onclick="handleOpen" icon-class="fa-solid fa-pen-to-square text-white" /> -->
+    <a-modal v-model:open="isOpenModal" @cancel="closeModal" title="Update Product Form" width="80%" wrap-class-name="w-full"
+        :mask-closable="false" @ok="handleSubmit" :footer="false"
+        :ok-button-props="{ disabled: disabled || loading, class: 'btn-class' }">
         <div class="grid grid-cols-4 gap-5">
-            <EShopInput label="Name" name="name" v-model="productData.name" />
-            <EShopInput label="Price" name="price" v-model="productData.price" />
+            <EShopInput label="Name" name="name" required v-model="productData.name" />
+            <EShopInput label="Price" name="price" required v-model="productData.price" />
             <div class="mb-5">
                 <div class="font-bold mb-2">Discount Availability</div>
                 <a-checkbox v-model:checked="productData.discountAvailable">Yes</a-checkbox>
@@ -14,7 +15,7 @@
         </div>
         <div class="grid grid-cols-4 gap-5">
             <div class="col-span-2">
-                <div class="mb-2 font-bold"><label>Color</label></div>
+                <div class="mb-2 font-bold"><label>Color <sup class="text-red-600">*</sup></label></div>
                 <a-collapse v-model:activeKey="activeKey" :bordered="false">
                     <template #expandIcon="{ isActive }">
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
@@ -54,7 +55,18 @@
                 </a-collapse>
             </div>
             <div class="mb-5">
-                <div class="mb-2 font-bold"><label>Brands</label></div>
+                <div class="mb-2 font-bold"><label>Category <sup class="text-red-600">*</sup></label></div>
+                <div>
+                    <a-select v-model:value="productData.category_id" placeholder="Inserted are removed"
+                        class="w-full rounded-lg" size="large">
+                        <a-select-option v-for="category of allCategories" :key="category.id" :value="category.id">{{
+                            category.name
+                        }}</a-select-option>
+                    </a-select>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div class="mb-2 font-bold"><label>Brands <sup class="text-red-600">*</sup></label></div>
                 <div>
                     <a-select v-model:value="productData.brands_id" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
@@ -64,7 +76,7 @@
                     </a-select>
                 </div>
             </div>
-            <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" />
+            <!-- <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" /> -->
         </div>
         <div class="grid grid-cols-2 gap-x-5">
             <div class="mb-6">
@@ -84,6 +96,7 @@
             <EShopButton :disabled="disabled" :onclick="handleSubmit" btn-text="Update" :loading="loading" />
         </div>
     </a-modal>
+   
 </template>
 
 <script setup>
@@ -100,13 +113,14 @@ const props = defineProps({
     refetch: Function,
     productDetails: Object,
     allColors: Array,
-    allBrands: Array
+    allBrands: Array,
+    allCategories: Array,
+    handleCloseModal: Function,
+    isOpenModal: Boolean
 });
-const { refetch, productDetails } = toRefs(props);
-const open = ref(false);
+const { refetch, productDetails, handleCloseModal, isOpenModal } = toRefs(props);
 const loading = ref(false);
 const content = ref(null);
-
 const initialState = {
     name: productDetails.value?.name,
     price: String(productDetails.value?.price),
@@ -114,7 +128,7 @@ const initialState = {
     discountAvailable: productDetails.value?.discountAvailable,
     quantity: String(productDetails.value?.quantity),
     colors: productDetails.value?.colors?.map(cl => ({
-        color_id:cl?.id,
+        color_id: cl?.id,
         colorName: cl?.colorName,
         colorCode: cl?.colorCode,
         quantity: cl?.pivot?.quantity,
@@ -148,12 +162,8 @@ const editorOptions = {
 };
 
 
-const handleOpen = () => {
-    open.value = true;
-}
-
 const closeModal = () => {
-    open.value = false;
+    handleCloseModal.value();
     productData.value = { ...initialState }
 }
 
@@ -191,9 +201,9 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.put(productAdmin.getProdcuts, productDetails.value.id,{ ...productData.value, description: content.value.getHTML() });
+        const res = await api.put(productAdmin.getProdcuts, productDetails.value.id, { ...productData.value, description: content.value.getHTML() });
         notify(res, refetch.value);
-        open.value = false
+        handleCloseModal.value();
     } catch (error) {
         console.log(error)
     }

@@ -3,8 +3,8 @@
     <a-modal v-model:open="open" title="New Product Form" width="80%" wrap-class-name="w-full" :mask-closable="false"
         @ok="handleSubmit" :footer="false">
         <div class="grid grid-cols-4 gap-5">
-            <EShopInput label="Name" name="name" v-model="productData.name" />
-            <EShopInput label="Price" name="price" v-model="productData.price" />
+            <EShopInput label="Name" name="name" required v-model="productData.name" />
+            <EShopInput label="Price" name="price" required v-model="productData.price" />
             <div class="mb-5">
                 <div class="font-bold mb-2">Discount Availability</div>
                 <a-checkbox v-model:checked="productData.discountAvailable">Yes</a-checkbox>
@@ -14,7 +14,7 @@
         </div>
         <div class="grid grid-cols-4 gap-5">
             <div class="col-span-2">
-                <div class="mb-2 font-bold"><label>Color</label></div>
+                <div class="mb-2 font-bold"><label>Color <sup class="text-red-600">*</sup></label></div>
                 <a-collapse v-model:activeKey="activeKey" :bordered="false">
                     <template #expandIcon="{ isActive }">
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
@@ -53,16 +53,28 @@
                 </a-collapse>
             </div>
             <div class="mb-5">
-                <div class="mb-2 font-bold"><label>Brands</label></div>
+                <div class="mb-2 font-bold"><label>Category <sup class="text-red-600">*</sup></label></div>
+                <div>
+                    <a-select v-model:value="productData.category_id" placeholder="Inserted are removed"
+                        class="w-full rounded-lg" size="large">
+                        <a-select-option v-for="category of allCategories" :key="category.id" :value="category.id">{{
+                            category.name
+                        }}</a-select-option>
+                    </a-select>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div class="mb-2 font-bold"><label>Brands <sup class="text-red-600">*</sup></label></div>
                 <div>
                     <a-select v-model:value="productData.brands_id" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
-                        <a-select-option v-for="brand of categoryData?.brands" :key="brand.id" :value="brand.id">{{
+                        <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{
                             brand.name
                         }}</a-select-option>
                     </a-select>
                 </div>
             </div>
+
 
             <!-- <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" /> -->
         </div>
@@ -97,8 +109,9 @@ import { notify } from '../../../helpers';
 
 const props = defineProps({
     refetch: Function,
-    categoryData: Object,
-    allColors: Array
+    allCategories: Array,
+    allColors: Array,
+    allBrands: Array
 });
 const { refetch, categoryData, allColors } = toRefs(props);
 const open = ref(false);
@@ -113,7 +126,7 @@ const initialState = {
     colors: [],
     description: '',
     brands_id: '',
-    category_id: categoryData.value?.id,
+    category_id: '',
     newArrival: false
 }
 const productData = ref({ ...initialState });

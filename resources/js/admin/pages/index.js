@@ -13,3 +13,4 @@ export { default as OrderDetails } from './OrderDetails.vue';
 export { default as Category } from './Category.vue';
 export { default as LandingPage } from './LandingPage.vue';
 export { default as Settings } from './Settings.vue';
+export { default as Products } from './Products.vue';

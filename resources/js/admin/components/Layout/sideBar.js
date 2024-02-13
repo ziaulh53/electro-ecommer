@@ -15,6 +15,11 @@ export const sideBar = [
         iconClass: 'fa-solid fa-bag-shopping'
     },
     {
+        label: 'Product',
+        path: '/admin/product',
+        iconClass: 'fa-solid fa-shop'
+    },
+    {
         label: 'Category',
         path: '/admin/category',
         iconClass: 'fa-solid fa-bars'

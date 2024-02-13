@@ -12,6 +12,7 @@ import {
     OrderDetails,
     AdminSignin,
     AdminSignup,
+    Products,
 } from "../admin/pages";
 import { ADMIN_ROLES } from "../constant";
 
@@ -83,6 +84,14 @@ export const adminRoutes = [
         },
     },
     {
+        path: "product",
+        name: "admin-product",
+        component: Products,
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
         path: "category",
         name: "admin-category",
         component: Category,
@@ -92,7 +101,7 @@ export const adminRoutes = [
     },
     {
         path: "category/:id",
-        name: "admin-product",
+        name: "admin-single-category",
         component: ProductList,
         meta: {
             requireAuth: true,

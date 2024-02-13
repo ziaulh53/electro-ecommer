@@ -7,17 +7,24 @@ use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::with(['colors', 'category'])->get();
-        return response(['product' => $product]);
+
+        $query = Product::with(['colors', 'category']);
+        if ($request->has('category') && !empty($request->category)) {
+            $categoryId = $request->get('category');
+            $query->where('category_id', $categoryId);
+        }
+        $product = $query->paginate(15);
+        return response([
+            'product' => $product,
+        ]);
     }
 
     /**
