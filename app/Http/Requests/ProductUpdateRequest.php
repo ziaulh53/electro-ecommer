@@ -27,6 +27,9 @@ class ProductUpdateRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'discountPrice' => 'nullable|numeric|min:0|lte:price',
             'discountAvailable' => 'required|boolean',
+            'default_images' => 'array',
+            'is_variation' => 'required|boolean',
+            'quantity' => 'integer',
             'newArrival' => 'nullable|boolean',
             'description' => 'required|string',
             'brands_id' => [
@@ -37,20 +40,20 @@ class ProductUpdateRequest extends FormRequest
             'category_id' => [
                 'required',
                 'integer',
-                Rule::exists('categories', 'id'), // Ensure category ID exists
+                Rule::exists('categories', 'id'),
             ],
 
             // Colors:
-            'colors' => 'required|array',
+            'colors' => ['required_if:is_variation,true|array'],
             'colors.*.color_id' => [
-                'required_if:colors.*.quantity,>0', // Required if quantity is provided
+                'required_if:colors.*.quantity,>0',
                 'nullable',
                 'integer',
-                Rule::exists('colors', 'id'), // Ensure color ID exists (optional if new)
+                Rule::exists('colors', 'id'),
             ],
             'colors.*.quantity' => 'required_with:colors.*.color_id|integer|min:0',
-            'colors.*.images' => 'required_with:colors.*.quantity|array',
-            'colors.*.images.*' => 'url|max:255', // Validate each image URL
+            'colors.*.images' => 'nullable|array',
+            'colors.*.images.*' => 'url|max:255',
         ];
     }
 }

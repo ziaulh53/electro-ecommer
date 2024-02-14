@@ -50,7 +50,6 @@ const totalCount = ref(0);
 const current = ref(1);
 
 const getProducts = async (page = 1) => {
-    console.log(page)
     loading.value = true;
     try {
         const res = await api.get('admin/product', { ...filters.value, page });
@@ -104,7 +103,5 @@ onMounted(() => {
     getCategories();
     getBrands();
 });
-
-
 
 </script>

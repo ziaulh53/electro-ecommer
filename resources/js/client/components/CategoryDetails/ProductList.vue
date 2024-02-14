@@ -3,7 +3,7 @@
         <router-link v-for="(product, idx) of data" :to="'/product/' + product?.id" :key="product?.id">
             <div
                 class="relative border border-gray-400 rounded-lg bg-white shadow-lg overflow-visible group hover:scale-105 transition-all duration-300">
-                <img :src="JSON.parse(product?.colors[0]?.pivot?.images)[0] || '/assets/poster.jpg'"
+                <img :src="JSON.parse(product?.default_images)[0] || '/assets/poster.jpg'"
                     class="h-[200px] w-[200px] m-auto object-cover rounded-t-md" />
                 <div class="p-4 border-t-2 bg-gray-100">
                     <h6 class="text-base font-bold">{{ product?.name }}</h6>

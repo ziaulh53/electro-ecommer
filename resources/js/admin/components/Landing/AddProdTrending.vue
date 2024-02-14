@@ -41,8 +41,7 @@ const handleModal = async () => {
     open.value = true;
     try {
         const res = await api.get(productAdmin.getProdcuts);
-        console.log(res)
-        allProducts.value = res.product;
+        allProducts.value = res.product?.data;
     } catch (error) {
         console.log(error)
     }
@@ -50,8 +49,6 @@ const handleModal = async () => {
 
 const handleOk = async () => {
     try {
-        // const res = await api.post(landingAdmin.updateTrending, { product_id:selectedProduct.value });
-        // notify(res, refetch.value)
         open.value = false
     } catch (error) {
         console.log(error)

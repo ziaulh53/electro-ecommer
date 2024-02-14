@@ -5,7 +5,7 @@
                 <p>{{ index + 1 }}</p>
             </template>
             <template v-if="column.key === 'image'">
-                <img :src="JSON.parse(record?.colors[0]?.pivot?.images)[0]" class="w-[80px] h-[50px]" />
+                <img :src="JSON.parse(record?.default_images)[0]" class="w-[80px] h-[50px]" />
             </template>
             <template v-if="column.key === 'name'">
                 <p>{{ record?.name }}</p>

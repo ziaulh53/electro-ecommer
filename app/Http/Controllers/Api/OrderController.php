@@ -59,9 +59,7 @@ class OrderController extends Controller
         $products = collect($request->items)->map(function ($item) use (&$totalPrice, &$allInStock) {
             $product =  Product::with(['colors'])->find($item['product_id']);
             $totalPrice += $product->price * $item['quantity'];
-            if (!checkColorAvailability($product, $item['color_id'], $item['quantity'])) {
-                $allInStock = false;
-            }
+            $allInStock =  checkColorAvailability($product, $item['color_id'], $item['quantity']);
             $product['requestQuantity'] = $item['quantity'];
             return $product;
         });

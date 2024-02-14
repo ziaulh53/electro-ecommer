@@ -64,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // public route
-Route::get('/landing/brands', [BrandController::class, 'index']);
+Route::get('/brands', [BrandController::class, 'index']);
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/product/new-arrival', [ProductController::class, 'getNewArrival']);
 Route::get('/product/trending', [TrendingController::class, 'index']);
@@ -72,7 +72,6 @@ Route::get('/banner', [BannerController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product-by-category/{id}',[ProductController::class,'getProductsByCategory']);
-
 
 Route::post('/signup', [UserAuthController::class, 'userSignup']);
 Route::post('/signin', [UserAuthController::class, 'userLogin']);

@@ -15,7 +15,7 @@ class TrendingController extends Controller
     public function store(Request $request)
     {
         $trending = Trending::create($request->only('product_id'));
-        return response()->json($trending, 201);
+        return response()->json(['success'=>true,'msg'=>'Added in trending list',$trending, 201]);
     }
 
     public function destroy($id)

@@ -37,8 +37,10 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
+            'quantity' => $request->quantity,
+            'is_variation' => $request->is_variation,
             'discountPrice' => $request->discountPrice,
-            'default_images' => $request->default_images,
+            'default_images' => json_encode($request->default_images),
             'discountAvailable' => $request->discountAvailable,
             'newArrival' => $request->newArrival,
             'description' => $request->description,
@@ -48,7 +50,7 @@ class ProductController extends Controller
         foreach ($request->colors as $color) {
             $product->colors()->attach($color['color_id'], [
                 'quantity' => $color['quantity'],
-                'images' => json_encode($color['images']),
+                // 'images' => json_encode($color['images']),
             ]);
         }
         return response(['success' => true, 'msg' => 'Product added.']);
@@ -69,26 +71,22 @@ class ProductController extends Controller
 
         $data = $request->validated();
 
-        // Update product attributes
         $product->update($data);
 
-        // Update associated colors (handle detachments and new attachments)
         $attachedColors = [];
         foreach ($request->colors as $color) {
-            $colorId = $color['color_id'] ?? null; // Allow existing or new colors
+            $colorId = $color['color_id'] ?? null; 
 
             if (!empty($colorId)) {
-                // Existing color: update attributes
                 $product->colors()->updateExistingPivot($colorId, [
                     'quantity' => $color['quantity'],
-                    'images' => json_encode($color['images']),
+                    // 'images' => json_encode($color['images']),
                 ]);
                 $attachedColors[] = $colorId;
             } else {
-                // New color: attach
                 $product->colors()->attach($color['color_id'], [
                     'quantity' => $color['quantity'],
-                    'images' => json_encode($color['images']),
+                    // 'images' => json_encode($color['images']),
                 ]);
             }
         }
@@ -100,9 +98,23 @@ class ProductController extends Controller
 
     public function getProductsByCategory(Request $request, string $id)
     {
-        $product = Product::query()->where('category_id', $id)->with('colors')->get();
-        $category = Category::query()->find($id);
-        return response(['success' => true, 'product' => $product, 'category'=>$category]);
+        $products = Product::query()
+            ->where('category_id', $id)
+            ->with(['colors'])
+            ->get();
+        $category = Category::find($id);
+        if ($request->has('brands') && !empty($request->brands)) {
+            $brands = $request->brands;
+            $products = $products->filter(function ($product) use ($brands) {
+                return in_array($product->brands_id, $brands);
+            });
+        }
+
+        return response()->json([
+            'success' => true,
+            'product' => $products,
+            'category' => $category,
+        ]);
     }
 
     public function getNewArrival()

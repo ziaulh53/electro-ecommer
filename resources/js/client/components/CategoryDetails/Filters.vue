@@ -9,7 +9,7 @@
             <h6 class="text-gray-500 mb-2">Brands</h6>
             <div>
                 <a-checkbox-group v-model:value="brandsState" @change="handleBrands" class="block">
-                    <div v-for="brand of brands" :key="brand.id" class="mb-1">
+                    <div v-for="brand of allBrands" :key="brand.id" class="mb-1">
                         <a-checkbox :value="brand.id">{{ brand?.name
                         }}</a-checkbox>
                     </div>
@@ -21,18 +21,20 @@
 </template>
 
 <script setup>
-import { ref, toRefs } from 'vue';
+import { ref, toRefs, onMounted } from 'vue';
+import { api } from '../../../api';
 const props = defineProps({
-    brands: Array,
     handleFilterSubmit: Function
 })
 
-const { brands, handleFilterSubmit } = toRefs(props);
+const {handleFilterSubmit } = toRefs(props);
 
 const filters = ref({
     maxPrice: 10000000,
     brands: []
 })
+
+const allBrands = ref([]);
 
 const brandsState = ref([]);
 
@@ -45,5 +47,18 @@ const handleBrands = (value)=>{
     filters.value.brands= value
     handleFilterSubmit.value(filters.value)
 }
+
+const fetchAllbrands = async()=>{
+    try {
+        const res = await api.get('brands');
+        allBrands.value = res?.brands?.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+onMounted(()=>{
+    fetchAllbrands();
+});
 
 </script>

@@ -25,7 +25,7 @@
                             data?.brand?.name }}</router-link></span></p>
         </div>
     </div>
-    <div class="my-5">
+    <div v-if="data?.is_variation" class="my-5">
         <span class="text-orange-500"><i class="fa-solid fa-palette"></i></span> Colors:
         <div class="flex mt-2">
             <div v-for="({ colorCode, id }, idx) of data?.colors" :key="id" @click="() => handleSelectColor(idx)"

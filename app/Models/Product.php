@@ -16,8 +16,11 @@ class Product extends Model
         'discountAvailable',
         'newArrival',
         'description',
+        'is_variation',
+        'quantity',
         'brands_id',
         'category_id',
+        'default_images'
     ];
 
     public function brand()

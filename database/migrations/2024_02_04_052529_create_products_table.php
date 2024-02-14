@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price', 10, 2);
+            $table->integer('quantity')->default(0);
             $table->decimal('discountPrice', 10, 2)->nullable();
-            $table->decimal('default_images', 10, 2)->nullable();
+            $table->json('default_images')->nullable();
             $table->boolean('discountAvailable')->default(false);
             $table->boolean('newArrival')->default(false);
+            $table->boolean('is_variation')->default(false);
             $table->text('description')->nullable();
             $table->foreignId('brands_id')->constrained('brands');
             $table->foreignId('category_id')->constrained('categories');
