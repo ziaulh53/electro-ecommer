@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use function PHPSTORM_META\map;
 
 class CategoryController extends Controller
 {
@@ -17,31 +15,31 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::query()->with('brands')->get();
+        $categories = Category::query()->get();
         return response(['success' => true, 'categories' => $categories]);
     }
 
 
     public function show(Request $request, string $id)
     {
-        $maxPrice = $request->input('maxPrice');
-        $brands = $request->input('brands');
-        $category = Category::with(['brands', 'products.colors', 'products.brand'])->find($id);
-        $category->load(['products' => function ($query) use ($maxPrice, $brands) {
-            $query->where(function ($query) use ($maxPrice) {
-                if ($maxPrice !== null) {
-                    $query->where('price', '<=', (double) $maxPrice);
-                }
-            });
-            $query->where(function ($query) use ($brands) {
-                if ($brands !== null) {
-                    $ids = collect($brands)->map(function($id){
-                        return (int) $id;
-                    })->toArray();
-                    $query->whereIn('brands_id', $ids);
-                }
-            });
-        }, 'products.colors']);
+        // $maxPrice = $request->input('maxPrice');
+        // $brands = $request->input('brands');
+        $category = Category::query()->find($id);
+        // $category->load(['products' => function ($query) use ($maxPrice, $brands) {
+        //     $query->where(function ($query) use ($maxPrice) {
+        //         if ($maxPrice !== null) {
+        //             $query->where('price', '<=', (double) $maxPrice);
+        //         }
+        //     });
+        //     $query->where(function ($query) use ($brands) {
+        //         if ($brands !== null) {
+        //             $ids = collect($brands)->map(function($id){
+        //                 return (int) $id;
+        //             })->toArray();
+        //             $query->whereIn('brands_id', $ids);
+        //         }
+        //     });
+        // }, 'products.colors']);
         return response(['success' => true, 'category' => $category]);
     }
 
@@ -54,8 +52,6 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'coverImage' => 'nullable|string',
-            'brands' => 'array',
-            'brands.*' => 'exists:brands,id',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +64,6 @@ class CategoryController extends Controller
             $category['coverImage'] = $request['coverImage'];
         }
         $category->save();
-        $category->brands()->attach($request['brands']);
         return response()->json([
             'msg' => 'Category created successfully!',
             'success' => true,
@@ -89,10 +84,6 @@ class CategoryController extends Controller
             $data['coverImage'] = $request['coverImage'];
         }
         $category->update($data);
-        if (isset($request['brands'])) {
-            $category->brands()->detach();
-            $category->brands()->attach($request['brands']);
-        }
         return response()->json([
             'msg' => 'Category updated successfully!',
             'success' => true,

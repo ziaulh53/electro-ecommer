@@ -66,16 +66,14 @@
             <div class="mb-5">
                 <div class="mb-2 font-bold"><label>Brands <sup class="text-red-600">*</sup></label></div>
                 <div>
-                    <a-select v-model:value="productData.brands_id" placeholder="Inserted are removed"
-                        class="w-full rounded-lg" size="large">
-                        <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{
-                            brand.name
-                        }}</a-select-option>
-                    </a-select>
+
+                    <a-select v-model:value="productData.brands_id" showSearch placeholder="Select a person"
+                        class="w-full rounded-lg" size="large"
+                        :options="allBrands?.map(brand => ({ value: brand.id, label: brand.name }))" :filter-option="(input, option) => {
+                            return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                        }"></a-select>
                 </div>
             </div>
-
-
             <!-- <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" /> -->
         </div>
         <div class="grid md:grid-cols-2 gap-x-5">
@@ -85,10 +83,27 @@
                     <quill-editor ref="content" :options="editorOptions" />
                 </div>
             </div>
-            <div class="mb-5">
-                <div class="font-bold mb-2">New Arrival</div>
-                <a-checkbox v-model:checked="productData.newArrival">Yes</a-checkbox>
+            <div class="grid md:grid-cols-4">
+                <div class="col-span-1">
+                    <div class="mb-5">
+                        <div class="font-bold mb-2">New Arrival</div>
+                        <a-checkbox v-model:checked="productData.newArrival">Yes</a-checkbox>
+                    </div>
+                </div>
+                <div class="col-span-3">
+                    <div class="font-bold mb-2">Default Images</div>
+                    <div v-for="url of productData.defaultImages" :key="url" class="inline-block mr-2">
+                        <img :src="url" class="h-[100px] w-[80px]" />
+
+                    </div>
+                    <div class="h-[100px] w-[80px] border-dashed border-2 bg-slate-100">
+                    </div>
+                    <div class="mt-5">
+                        <input type="file" multiple :onchange="handleDefaultImages" />
+                    </div>
+                </div>
             </div>
+
         </div>
         <div class="text-right">
             <button class="mr-3 border-2 px-4 py-1 rounded-lg font-semibold" :onclick="closeModal">Cancel</button>
@@ -113,7 +128,7 @@ const props = defineProps({
     allColors: Array,
     allBrands: Array
 });
-const { refetch, categoryData, allColors } = toRefs(props);
+const { refetch, allColors } = toRefs(props);
 const open = ref(false);
 const loading = ref(false);
 const content = ref(null);
@@ -125,6 +140,7 @@ const initialState = {
     discountAvailable: false,
     colors: [],
     description: '',
+    defaultImages: [],
     brands_id: '',
     category_id: '',
     newArrival: false
@@ -165,7 +181,7 @@ const closeModal = () => {
 }
 
 // color
-const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity)
 const handleAddColor = () => {
 
     let colors = productData.value.colors;
@@ -191,6 +207,21 @@ const handleFile = async (e) => {
             images.push(res.url);
         }
         colorState.value.images = images;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+const handleDefaultImages = async (e) => {
+    let images = productData.value.defaultImages;
+    try {
+        const files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            const res = await api.fileUpload(files[i]);
+            images.push(res.url);
+        }
+        productData.value.defaultImages = images;
     } catch (error) {
         console.log(error)
     }

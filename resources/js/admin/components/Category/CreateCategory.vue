@@ -7,16 +7,6 @@
                 v-model="categoryData.name" name="name" />
         </div>
         <div class="mb-5">
-            <div class="mb-2 font-bold"><label>Brands</label></div>
-            <div>
-                <a-select v-model:value="categoryData.brands" mode="multiple" placeholder="Inserted are removed"
-                    class="w-full rounded-lg" size="large" >
-                    <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{ brand.name
-                    }}</a-select-option>
-                </a-select>
-            </div>
-        </div>
-        <div class="mb-5">
             <div class="mb-2 font-bold"><label>Cover image</label></div>
             <div v-if="categoryData.coverImage">
                 <img :src="categoryData.coverImage" class="h-[200px] w-[150px]" />
@@ -34,20 +24,17 @@
 import { ref, computed, toRefs } from 'vue'
 import { EShopButton } from '../shared';
 import { api, categoryAdmin } from '../../../api';
-import { useBrandStore } from '../../../store';
 import { notify } from '../../../helpers';
 const props = defineProps({
     refetch: Function
 })
-const {refetch} = toRefs(props)
-const brandStore = useBrandStore();
-const allBrands = computed(() => brandStore.brand.map(({ id, name }) => ({ id, name })) || [])
+const {refetch} = toRefs(props);
 
 const open = ref(false);
 
-const categoryData = ref({ name: '', coverImage: '', brands: [] })
+const categoryData = ref({ name: '', coverImage: '' })
 const loading = ref(false)
-const disabled = computed(() => !categoryData.value.name || categoryData.value.brands.length === 0);
+const disabled = computed(() => !categoryData.value.name);
 const handleSubmit = async () => {
     loading.value = true;
     try {

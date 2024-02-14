@@ -1,10 +1,6 @@
 <template>
-    <div class="flex justify-between items-center mb-5">
-        <h2 class="font-bold text-2xl">{{ data?.name }}</h2>
-        <span class="md:hidden"><i class="fa-solid fa-filter text-theme-light"></i></span>
-    </div>
     <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        <router-link v-for="(product,idx) of data?.products" :to="'/product/' + product?.id" :key="product?.id">
+        <router-link v-for="(product, idx) of data" :to="'/product/' + product?.id" :key="product?.id">
             <div
                 class="relative border border-gray-400 rounded-lg bg-white shadow-lg overflow-visible group hover:scale-105 transition-all duration-300">
                 <img :src="JSON.parse(product?.colors[0]?.pivot?.images)[0] || '/assets/poster.jpg'"
@@ -46,7 +42,7 @@
 </template>
 <script setup>
 defineProps({
-    data: Object
+    data: Array
 })
 
 const checkAvailability = (colors = []) => {

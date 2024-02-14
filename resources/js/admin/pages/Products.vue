@@ -20,13 +20,11 @@
                     :allBrands="allBrands" />
             </div>
         </div>
-        <a-spin :spinning="loading">
-            <ProductTable :allProducts="allProducts" :loading="loading" :allBrands="allBrands"
-                :allCategories="allCategories" :allColors="allColors" :refetch="getProducts" />
-            <div class="text-right mt-5">
-                <a-pagination :total="totalCount" :current="current" :page-size="15" @change="(page)=>getProducts(page)" />
-            </div>
-        </a-spin>
+        <ProductTable :allProducts="allProducts" :loading="loading" :allBrands="allBrands" :allCategories="allCategories"
+            :allColors="allColors" :refetch="getProducts" />
+        <div class="text-right mt-5">
+            <a-pagination :total="totalCount" :current="current" :page-size="15" @change="(page) => getProducts(page)" />
+        </div>
 
 
     </Layout>
@@ -51,7 +49,7 @@ const filters = ref({
 const totalCount = ref(0);
 const current = ref(1);
 
-const getProducts = async (page=1) => {
+const getProducts = async (page = 1) => {
     console.log(page)
     loading.value = true;
     try {

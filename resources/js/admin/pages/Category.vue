@@ -19,9 +19,7 @@ import { PageTitle } from '../components/shared';
 import { CategoryItem, CreateCategory } from '../components/Category'
 import { api, categoryAdmin } from '../../api';
 import { onMounted, ref } from 'vue';
-import { useBrandStore } from '../../store'
 
-const brandStore = useBrandStore()
 const allCategory = ref('');
 const loading = ref(false);
 
@@ -31,13 +29,10 @@ const getAllCategory = async () => {
     allCategory.value = await api.get(categoryAdmin.getCategory);
     loading.value = false
 }
-const getAllBrands = () => {
-    brandStore.saveBrands();
-}
+
 
 onMounted(() => {
     getAllCategory();
-    getAllBrands();
 })
 
 </script>

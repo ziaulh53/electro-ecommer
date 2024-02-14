@@ -48,7 +48,7 @@ const colorState = ref({
 
 
 // color
-const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity)
 const handleEditColor = () => {
     const { color_id, images, quantity } = colorState.value;
     const { colorName, colorCode } = allColors.value?.find(cl => cl.id === color_id);

@@ -13,11 +13,6 @@ class Brand extends Model
         'logo',
     ];
 
-    public function category()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
     public function products()
     {
         return $this->hasMany(Product::class);

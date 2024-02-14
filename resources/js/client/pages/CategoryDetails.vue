@@ -5,12 +5,16 @@
                 <Filters :brands="category?.brands" :handleFilterSubmit="handleFilterSubmit" />
             </div>
 
-            <div v-if="category?.products?.length" class="col-span-6 md:col-span-4 lg:col-span-5">
-                <a-spin :spinning="loading && category?.products?.length">
-                    <ProductList :data="category" />
+            <div v-if="categoryDetails?.id" class="col-span-6 md:col-span-4 lg:col-span-5">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="font-bold text-2xl">{{ categoryDetails?.name }}</h2>
+                    <span class="md:hidden"><i class="fa-solid fa-filter text-theme-light"></i></span>
+                </div>
+                <a-spin :spinning="loading && allProduct?.length">
+                    <ProductList :data="allProduct" />
                 </a-spin>
             </div>
-            <div v-if="loading && !category?.products?.length" class="col-span-6 md:col-span-4 lg:col-span-5">
+            <div v-if="loading && !allProduct?.length" class="col-span-6 md:col-span-4 lg:col-span-5">
                 <div class="mb-3">
                     <EShopSkeleton height="41px" />
                 </div>
@@ -29,7 +33,8 @@ import { Filters, ProductList } from '../components/CategoryDetails';
 import { api, categoryEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
 import { EShopSkeleton } from '../components/shared';
-const category = ref('');
+const allProduct = ref([]);
+const categoryDetails = ref({});
 const loading = ref(false);
 const filters = ref({
     maxPrice: 10000,
@@ -40,8 +45,9 @@ const route = useRoute()
 const getCategoryDetails = async () => {
     loading.value = true
     try {
-        const res = await api.get(categoryEndpoint.fetchSingleCategory + route.params.id, { ...filters.value })
-        category.value = res?.category;
+        const res = await api.get('product-by-category/' + route.params.id, { ...filters.value })
+        allProduct.value = res?.product;
+        categoryDetails.value = res?.category;
     } catch (error) {
         console.log(error)
     }

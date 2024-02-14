@@ -7,17 +7,6 @@
             <input type="text" class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder=""
                 v-model="categoryData.name" name="name" />
         </div>
-        <div class="mb-5">
-            <div class="mb-2 font-bold"><label>Brands</label></div>
-            <div>
-                <a-select v-model:value="categoryData.brands" mode="multiple" placeholder="Inserted are removed"
-                    class="w-full rounded-lg" size="large">
-                    <a-select-option v-for="brand of allBrands" :key="brand.id" :value="brand.id">{{ brand.name
-                    }}</a-select-option>
-
-                </a-select>
-            </div>
-        </div>
         <!-- {{ allBrands }} -->
         <div class="mb-5">
             <div class="mb-2 font-bold"><label>Cover Image</label></div>
@@ -37,22 +26,18 @@
 import { ref, toRefs, computed } from 'vue';
 import { api, categoryAdmin } from '../../../api';
 import { notify } from '../../../helpers';
-import { useBrandStore } from '../../../store';
 
 const props = defineProps({
     data: Object,
     refetch: Function
 })
 
-const brandStore = useBrandStore();
-
 const { data, refetch } = toRefs(props)
 const open = ref(false)
 const loading = ref(false)
-const categoryData = ref({ ...data.value, brands: data.value.brands.map(({ id, name }) => ({ key: id, name })) })
+const categoryData = ref({ ...data.value })
 
 const disabled = computed(() => !categoryData.value.name)
-const allBrands = computed(() => brandStore.brands)
 
 const handleModal = () => {
     open.value = true;
@@ -65,8 +50,8 @@ const handleClose = () => {
 const handleSubmit = async (id) => {
     loading.value = true;
     try {
-        const { name, brands, coverImage } = categoryData.value;
-        const res = await api.put(categoryAdmin.getCategory, id, { name, coverImage, brands });
+        const { name, coverImage } = categoryData.value;
+        const res = await api.put(categoryAdmin.getCategory, id, { name, coverImage });
         notify(res);
         handleClose();
         refetch.value();

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('price', 10, 2);
             $table->decimal('discountPrice', 10, 2)->nullable();
+            $table->decimal('default_images', 10, 2)->nullable();
             $table->boolean('discountAvailable')->default(false);
             $table->boolean('newArrival')->default(false);
             $table->text('description')->nullable();

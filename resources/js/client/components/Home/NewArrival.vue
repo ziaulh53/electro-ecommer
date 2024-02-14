@@ -5,7 +5,7 @@
                 <i class="fa-solid fa-plane-arrival mr-2"></i>New Arrivals
             </h2>
             <router-link to="/new-arrival"
-                class="font-semibold p-3 rounded-lg text-white bg-red-600 hover:bg-red-500 transition-all">Show
+                class="font-semibold px-3 py-1 rounded-lg text-white bg-red-600 hover:bg-red-500 transition-all">Show
                 More</router-link>
         </div>
         <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">

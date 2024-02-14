@@ -15,14 +15,7 @@ class Category extends Model
     protected $fillable = [
         'name', 'coverImage',
     ];
-
-    /**
-     * Get the brands associated with the category.
-     */
-     public function brands()
-    {
-        return $this->belongsToMany(Brand::class);
-    }
+ 
 
     public function products()
     {

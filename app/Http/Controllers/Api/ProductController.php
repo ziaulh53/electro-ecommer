@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'discountPrice' => $request->discountPrice,
+            'default_images' => $request->default_images,
             'discountAvailable' => $request->discountAvailable,
             'newArrival' => $request->newArrival,
             'description' => $request->description,
@@ -94,6 +96,13 @@ class ProductController extends Controller
         $detachedColors = array_diff($product->colors->pluck('id')->toArray(), $attachedColors);
         $product->colors()->detach($detachedColors);
         return response(['success' => true, 'msg' => 'Product updated.']);
+    }
+
+    public function getProductsByCategory(Request $request, string $id)
+    {
+        $product = Product::query()->where('category_id', $id)->with('colors')->get();
+        $category = Category::query()->find($id);
+        return response(['success' => true, 'product' => $product, 'category'=>$category]);
     }
 
     public function getNewArrival()
