@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TrendingController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\UsersController;
+use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +73,8 @@ Route::get('/banner', [BannerController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product-by-category/{id}',[ProductController::class,'getProductsByCategory']);
+Route::get('/product-suggestion', [ProductController::class, 'getSuggestion']);
+Route::get('/brands/{id}', [ProductController::class, 'getProdcutsByBrand']);
 
 Route::post('/signup', [UserAuthController::class, 'userSignup']);
 Route::post('/signin', [UserAuthController::class, 'userLogin']);

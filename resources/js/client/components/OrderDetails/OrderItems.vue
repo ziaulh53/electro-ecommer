@@ -4,7 +4,7 @@
         <a-table :columns="columns" :data-source="[...data, { totalPrice, lastChild: true }]" :pagination="false">
             <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'image'">
-                    <img v-if="!record.lastChild" :src="record?.colors?.images[0]" class="w-[100px] h-[100px]" />
+                    <img v-if="!record.lastChild" :src="record?.images[0]" class="w-[100px] h-[100px]" />
                 </template>
                 <template v-if="column.key === 'unit-price'">
                     <span v-if="!record.lastChild">USD {{ record?.discountAvailable ? record?.discountPrice : record?.price

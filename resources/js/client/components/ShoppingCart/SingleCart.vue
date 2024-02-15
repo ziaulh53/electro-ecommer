@@ -1,12 +1,11 @@
 <template>
     <div class="flex w-2/5">
         <div class="w-20">
-            <img class="h-24" :src="cart?.colors?.images[0]" alt="">
+            <img class="h-24" :src="cart?.images[0]" alt="">
         </div>
         <div class="ml-4">
             <div class="font-bold text-sm mb-5">{{ cart?.name }}</div>
-            <div class="text-red-500 text-xs">Color: {{ cart?.colors?.colorName }}</div>
-            <!-- <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a> -->
+            <div v-if="cart?.is_variation" class="text-red-500 text-xs">Color: {{ cart?.colors?.colorName }}</div>
         </div>
     </div>
     <div class="text-center w-1/5 font-semibold text-sm"><span :class="cart?.discountAvailable ? 'text-red-600' : ''">USD {{

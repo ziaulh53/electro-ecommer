@@ -152,7 +152,7 @@ const initialState = {
     discountAvailable: false,
     colors: [],
     description: '',
-    default_images: ['dfdfd'],
+    default_images: [],
     is_variation: false,
     quantity: 0,
     brands_id: '',

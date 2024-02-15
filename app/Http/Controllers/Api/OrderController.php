@@ -59,8 +59,7 @@ class OrderController extends Controller
         $products = collect($request->items)->map(function ($item) use (&$totalPrice, &$allInStock) {
             $product =  Product::with(['colors'])->find($item['product_id']);
             $totalPrice += $product->price * $item['quantity'];
-            $allInStock =  checkColorAvailability($product, $item['color_id'], $item['quantity']);
-            $product['requestQuantity'] = $item['quantity'];
+            $allInStock =  checkItemAvailability($product, $item['color_id'], $item['quantity']);
             return $product;
         });
 
@@ -89,8 +88,17 @@ class OrderController extends Controller
         $data['shippingAddress'] = json_decode($request->shippingAddress);
         $data['billingAddress'] = json_decode($request->billingAddress);
         Order::create($data);
-        foreach ($products as $product) {
-            updateColorQuantity($product);
+
+        foreach ($request->items as $foundProduct) {
+            $product = Product::find($foundProduct['id']);
+            if ($product) {
+                if ($product->is_variation) {
+                    updateQuantity($product, $foundProduct);
+                } else {
+                    $remainQuantity = $product->quantity - $foundProduct['quantity'];
+                    $product->update(["quantity" => $remainQuantity]);
+                }
+            }
         }
         return response(['success' => true, 'msg' => 'Order Placed.', 'data' => $data]);
     }
@@ -152,26 +160,28 @@ class OrderController extends Controller
 
 
 // usable function
-function checkColorAvailability(Product $product, int $colorId, int $quantity): bool
+function checkItemAvailability(Product $product, int $colorId, int $quantity): bool
 {
-    $availableQuantity = $product->colors->where('id', $colorId)->first()->pivot->quantity;
+    $availableQuantity = $product->quantity;
+    if ($product->is_variation) {
+        $availableQuantity = $product->colors->where('id', $colorId)->first()->pivot->quantity;
+    }
+
     if ($availableQuantity < $quantity) {
         return false;
     }
     return true;
 }
 
-function updateColorQuantity($product)
+function updateQuantity($product, $requestItem)
 {
-    $productColors = $product->colors;
-    $quantityPurchased = $product->requestQuantity;
-    foreach ($productColors as $color) {
-        $pivot = ProductColor::where('product_id', $product->id)
-            ->where('color_id', $color->id)
-            ->first();
-        if ($pivot) {
-            $pivot->quantity -= $quantityPurchased;
-            $pivot->save();
-        }
+    $quantityPurchased = $requestItem['quantity'];
+    $colorId = $requestItem['color_id'];
+    $pivot = ProductColor::where('product_id', $product->id)
+        ->where('color_id', $colorId)
+        ->first();
+    if ($pivot) {
+        $pivot->quantity -= $quantityPurchased;
+        $pivot->save();
     }
 }

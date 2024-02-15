@@ -32,7 +32,7 @@
         <router-link v-for="({ id, items, status, orderId }) of allOrders?.orders" :to="'/order-details/' + id"
             :key="id">
             <div class="border-2 rounded-lg bg-white">
-                <img :src="items[0]?.colors?.images?.[0] || '/assets/poster.jpg'"
+                <img :src="items[0]?.images?.[0] || '/assets/poster.jpg'"
                     class="h-[250px] w-full object-cover rounded-t-md" />
                 <div class="p-4">
                     <h6 class="text-base font-bold mb-3">{{ items[0]?.name }}</h6>

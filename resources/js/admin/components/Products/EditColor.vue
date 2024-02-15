@@ -11,7 +11,7 @@
         </div>
     </div>
     <EShopInput type="number" label="Quantity" v-model="colorState.quantity" />
-    <div class="mb-2">
+    <!-- <div class="mb-2">
         <div class="mb-2 font-bold">Product images</div>
         <div v-for="url of colorState.images" :key="url" class="inline-block mr-2">
             <img :src="url" class="h-[150px] w-[100px]" />
@@ -20,7 +20,7 @@
         <div class="mt-5">
             <input type="file" multiple :onchange="handleFile" />
         </div>
-    </div>
+    </div> -->
     <EShopButton btn-text="Update" :disabled="disabledColor" classes="w-full" :onclick="handleEditColor"
         :allColors="allColors" />
 </template>
@@ -40,7 +40,7 @@ const props = defineProps({
 const { colorstate, handleUpdateColor, idx, allColors } = toRefs(props);
 const colorState = ref({
     color_id: colorstate.value.color_id,
-    images: colorstate.value.images,
+    // images: colorstate.value.images,
     quantity: String(colorstate.value.quantity),
     colorName: colorstate.value?.colorName,
     colorCode: colorstate.value?.colorCode,
@@ -50,25 +50,25 @@ const colorState = ref({
 // color
 const disabledColor = computed(() => !colorState.value.color_id || !colorState.value.quantity)
 const handleEditColor = () => {
-    const { color_id, images, quantity } = colorState.value;
+    const { color_id, quantity } = colorState.value;
     const { colorName, colorCode } = allColors.value?.find(cl => cl.id === color_id);
-    colorState.value = { color_id, colorName: colorName, colorCode, images, quantity: Number(quantity) };
+    colorState.value = { color_id, colorName: colorName, colorCode, quantity: Number(quantity) };
     handleUpdateColor.value(colorState.value, idx.value)
 }
 
-const handleFile = async (e) => {
-    let images = colorState.value.images;
-    try {
-        const files = e.target.files;
-        for (var i = 0; i < files.length; i++) {
-            const res = await api.fileUpload(files[i]);
-            images.push(res.result.url);
-        }
-        colorState.value.images = images;
-    } catch (error) {
-        console.log(error)
-    }
-}
+// const handleFile = async (e) => {
+//     let images = colorState.value.images;
+//     try {
+//         const files = e.target.files;
+//         for (var i = 0; i < files.length; i++) {
+//             const res = await api.fileUpload(files[i]);
+//             images.push(res.result.url);
+//         }
+//         colorState.value.images = images;
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 // submit
 // const handleSubmit = async () => {

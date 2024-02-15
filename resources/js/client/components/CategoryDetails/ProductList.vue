@@ -26,7 +26,7 @@
                     class="absolute top-2 right-2 text-sm bg-red-500 text-white font-semibold px-2 py-1">
                     Discount
                 </div>
-                <div v-if="checkAvailability(product?.colors)"
+                <div v-if="checkAvailability(product)"
                     class="absolute top-2 left-2 text-sm bg-gray-800 rounded-md text-white font-semibold px-2 py-1">
                     IN STOCK
                 </div>
@@ -35,9 +35,11 @@
                 </div>
                 <div v-if="product?.newArrival" class="absolute top-1/2 -right-3">
                     <img class="w-[68px]" :src="'/assets/tag3.png'" />
-                </div>
+                </div> 
             </div>
         </router-link>
+
+
     </div>
 </template>
 <script setup>
@@ -45,8 +47,11 @@ defineProps({
     data: Array
 })
 
-const checkAvailability = (colors = []) => {
-    return Math.max(...colors?.map(item => item.pivot?.quantity)) > 1 ? true : false
+const checkAvailability = (data) => {
+    if (data?.is_variation) {
+        return Math.max(...data?.colors?.map(item => item.pivot?.quantity)) > 1 ? true : false
+    }
+    return data?.quantity > 1 ? true : false;
 }
 
 </script>

@@ -5,7 +5,7 @@
         <div class="grid grid-cols-4 gap-5 mb-5">
             <a-card hoverable v-for="({product}) of trendings">
                 <template #cover>
-                    <img alt="example" class="h-[200px] object-cover" :src="JSON.parse(product?.colors[0]?.pivot?.images)[0] || '/assets/logo.png'" />
+                    <img alt="example" class="h-[200px] object-cover" :src="JSON.parse(product?.default_images)[0] || '/assets/logo.png'" />
                 </template>
                 <a-card-meta :title="product?.name" description="This is the description">
                 </a-card-meta>

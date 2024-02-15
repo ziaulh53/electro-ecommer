@@ -45,7 +45,6 @@ const productData = ref({});
 
 const handleOpenModal = (product) => {
     productData.value = {...product};
-    console.log(product)
     isOpenModal.value = true;
 }
 

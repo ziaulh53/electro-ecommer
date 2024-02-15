@@ -5,11 +5,11 @@
             <div class="flex justify-between">
                 <div>
                     <p class="text-gray-600 font-bold">{{ cart?.name }}</p>
-                    <p>Color: {{ cart?.colors?.colorName }}</p>
+                    <p v-if="cart?.is_variation">Color: {{ cart?.colors?.colorName }}</p>
                     <p>Price: USD {{ cart?.discountAvailable? cart?.discountPrice:cart?.price  }} X {{ cart?.quantity }}</p>
                     <p>Quantity: {{ cart?.quantity }}</p>
                 </div>
-                <img :src="cart?.colors?.images[0]||'/assets/logo.png'" class="w-[100px] h-[100px]" />
+                <img :src="cart?.images[0]||'/assets/logo.png'" class="w-[100px] h-[100px]" />
             </div>
         </div>
         <div class="mt-5">

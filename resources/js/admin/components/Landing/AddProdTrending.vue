@@ -7,7 +7,7 @@
                     @click="() => handleSelectProduct(product?.id)">
                     <template #cover>
                         <img alt="example" class="h-[200px]"
-                            :src="JSON.parse(product?.colors[0]?.pivot?.images)[0] || 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" />
+                            :src="JSON.parse(product?.default_images)[0] || 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" />
                     </template>
                     <a-card-meta :title="product?.name" :description="'Category: ' + product?.category?.name" />
                     <div v-if="selectedProduct.includes(product?.id)"

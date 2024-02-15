@@ -25,7 +25,7 @@ const getSuggestionProducts = async () => {
     try {
         loading.value = true
         const res = await api.get(productEndpoint.fetchSuggestionProducts, { categoryId: categoryId.value, productId: route.params.id });
-        products.value = res?.result;
+        products.value = res?.product;
         loading.value = false
     } catch (error) {
         console.log(error)

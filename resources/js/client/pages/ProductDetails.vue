@@ -14,12 +14,12 @@
                     <ProductInfo v-if="!loading" :data="product?.result" :handleSelectColor="handleSelectColor"
                         :selected-colors="selectedColors" />
                     <div v-if="!loading" class="my-5">
-                        <EShopButton :disabled="selectedColors?.pivot?.quantity < 2" iconclass="fa-solid fa-bag-shopping"
+                        <EShopButton :disabled="checkAvailability(product.result)" iconclass="fa-solid fa-bag-shopping"
                             classes="font-semibold mr-10" btn-text="ADD CART" :onclick="handleAddCart" />
                         <AddWish />
                     </div>
 
-                    <div v-if="selectedColors?.pivot?.quantity < 2">
+                    <div v-if="checkAvailability(product.result)">
                         <button class="px-8 py-2 bg-red-500 text-white">SOLD OUT</button>
                     </div>
 
@@ -29,13 +29,13 @@
                     </div>
                 </div>
             </div>
-            <!-- <ExploreMore v-if="product?.result" :category-id="product?.result?.category?._id" /> -->
+            <ExploreMore v-if="product?.result" :category-id="product?.result?.category?.id" />
         </div>
     </Layout>
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Layout } from '../components/Layout';
 import { api, productEndpoint } from '../../api';
 import { useRoute } from 'vue-router';
@@ -61,8 +61,7 @@ const getProductDetails = async () => {
     try {
         loading.value = true
         product.value = await api.get(productEndpoint.fetchSingleProduct + route.params.id);
-        // selectedColors.value = product.value.result?.colors[0];
-        
+        selectedColors.value = product.value.result?.colors[0];
         loading.value = false
     } catch (error) {
         console.log(error)
@@ -83,11 +82,20 @@ const handleAddCart = () => {
     const data = {
         ...product.value.result,
         colors: {...selectedColors.value},
+        color_id: selectedColors?.value?.id,
         images: JSON.parse(product.value?.result?.default_images),
         quantity: 1
     }
     cartStore.userAddCart(data)
 }
 
+
+const checkAvailability = (data)=>{
+    if(data?.is_variation){
+       return selectedColors.value?.pivot?.quantity < 2;
+    }
+
+    return data?.quantity <2;
+}
 
 </script>

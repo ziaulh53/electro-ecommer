@@ -117,6 +117,20 @@ class ProductController extends Controller
         ]);
     }
 
+
+    public function getSuggestion(Request $request, ){
+        $category_id = $request['categoryId'];
+        $product_id = $request['productId'];
+        $product = Product::query()->where('category_id', $category_id)->where('id', '!=', $product_id)->with('colors')->get();
+        return response(['success'=>true, 'product'=>$product]);
+    }
+
+
+    public function getProdcutsByBrand(Request $request, string $id){
+        $products = Product::query()->where('brands_id', $id)->with('colors')->get();
+        return response(['success'=>false, 'product'=>$products]);
+    }
+
     public function getNewArrival()
     {
         $product = Product::query()->where('newArrival', true)->with('colors')->get();

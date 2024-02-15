@@ -55,15 +55,18 @@ export const useCartStore = defineStore("cart", {
         },
         async singleCartItemDelete(data) {
             this.cart = this.cart.filter(
-                (item) =>
-                    item?.id !== data?.id &&
-                    item?.colors?.id !== data?.colors?.id
+                (item) =>{
+                    if(item?.id !== data?.id) return item;
+                    else if(item?.id === data?.id && item?.is_variation){
+                        if(item?.color_id !== data?.color_id){
+                            return item;
+                        }
+                    }
+                }
             );
-            // Optionally: Perform optimistic update and API call here
         },
         async clearCart() {
             this.cart = [];
-            // Optionally: Perform optimistic update and API call here
         },
     },
 });
